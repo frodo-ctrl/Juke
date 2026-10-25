@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juke 剧刻 · 品牌启动页原型</title>
+<!-- 中文设计字体（在线预览用；离线时自动回退系统字体，不影响布局） -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@200&family=Noto+Serif+SC:wght@900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="stage">
+    <header class="stage-head">
+      <h1>Juke 剧刻 · 品牌启动页</h1>
+      <p>高保真视觉原型 · 配色对齐应用默认深色主题 · 动效总时长约 1.2s 后自动进入主界面</p>
+    </header>
+
+    <div class="phone" id="phone">
+      <div class="phone-frame">
+        <div class="splash is-anim" id="splash">
+
+          <!-- 海报墙背景图（虚化） -->
+          <div class="splash-bgimg" aria-hidden="true"></div>
+
+          <!-- 背景氛围层：主题色压暗叠加 / 暗角 / 胶片颗粒 -->
+          <div class="splash-bg" aria-hidden="true"></div>
+          <div class="splash-vignette" aria-hidden="true"></div>
+          <div class="splash-grain" aria-hidden="true"></div>
+
+          <!-- 状态栏（示意） -->
+          <div class="statusbar" aria-hidden="true">
+            <span class="statusbar-time">21:47</span>
+            <span class="statusbar-icons">
+              <svg viewBox="0 0 16 12" width="15" height="12" fill="currentColor" aria-hidden="true">
+                <rect x="0" y="7" width="2.6" height="5" rx="0.8"/>
+                <rect x="4.2" y="4.6" width="2.6" height="7.4" rx="0.8"/>
+                <rect x="8.4" y="2.2" width="2.6" height="9.8" rx="0.8"/>
+                <rect x="12.6" y="0" width="2.6" height="12" rx="0.8"/>
+              </svg>
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                <circle cx="12" cy="19.4" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+              <svg viewBox="0 0 25 12" width="22" height="11" aria-hidden="true">
+                <rect x="0.5" y="0.5" width="21" height="11" rx="3" fill="none" stroke="currentColor" stroke-opacity="0.5"/>
+                <rect x="2.5" y="2.5" width="15" height="7" rx="1.5" fill="currentColor"/>
+                <rect x="22.8" y="3.8" width="1.8" height="4.4" rx="0.9" fill="currentColor" fill-opacity="0.5"/>
+              </svg>
+            </span>
+          </div>
+
+          <!-- 品牌主体 -->
+          <div class="lockup">
+            <h1 class="wordmark">Juke</h1>
+            <div class="cn-name">剧刻</div>
+            <p class="slogan">好剧 从此刻开始</p>
+          </div>
+
+          <!-- Home 指示条（示意） -->
+          <div class="home-indicator" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage-actions">
+      <button class="replay-btn" id="replayBtn" type="button">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        重播入场动效
+      </button>
+      <p class="stage-note">色值取自项目默认深色主题（Colors.kt）· 字号 / 间距 / 动效时序见 styles.css 顶部 Design Tokens</p>
+    </div>
+  </main>
+  <script>
+    document.getElementById('replayBtn').addEventListener('click', function () {
+      var splash = document.getElementById('splash');
+      splash.classList.remove('is-anim');
+      void splash.offsetWidth;
+      splash.classList.add('is-anim');
+    });
+  </script>
+</body>
+</html>

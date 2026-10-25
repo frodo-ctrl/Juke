@@ -12,7 +12,7 @@
   </style>
 
   <style name="Theme.TvManiac.Splash" parent="NightAdjusted.Theme.Splash">
-    <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_launcher</item>
+    <item name="windowSplashScreenAnimatedIcon">@drawable/juke_splash_wordmark</item>
     <item name="postSplashScreenTheme">@style/Theme.TvManiac</item>
   </style>
 

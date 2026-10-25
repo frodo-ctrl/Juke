@@ -18,6 +18,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -70,42 +73,54 @@ public class MainActivity : ComponentActivity() {
             val appUiState by graph.rootPresenter.appUiState.collectAsState()
             val appTheme = appUiState.appTheme
             val useDarkTheme = shouldUseDarkTheme(appTheme)
+            var showBrandSplash by rememberSaveable {
+                mutableStateOf(savedInstanceState == null)
+            }
 
-            splashScreen.setKeepOnScreenCondition { appUiState.isFetching }
-
-            DisposableEffect(useDarkTheme) {
-                enableEdgeToEdge(
-                    statusBarStyle = SystemBarStyle.auto(
-                        Color.TRANSPARENT,
-                        Color.TRANSPARENT,
-                    ) {
-                        useDarkTheme
-                    },
-                    navigationBarStyle = SystemBarStyle.auto(
-                        lightScrim,
-                        darkScrim,
-                    ) {
-                        useDarkTheme
-                    },
-                )
+            DisposableEffect(useDarkTheme, showBrandSplash) {
+                if (showBrandSplash) {
+                    enableEdgeToEdge(
+                        statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+                        navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+                    )
+                } else {
+                    enableEdgeToEdge(
+                        statusBarStyle = SystemBarStyle.auto(
+                            Color.TRANSPARENT,
+                            Color.TRANSPARENT,
+                        ) {
+                            useDarkTheme
+                        },
+                        navigationBarStyle = SystemBarStyle.auto(
+                            lightScrim,
+                            darkScrim,
+                        ) {
+                            useDarkTheme
+                        },
+                    )
+                }
                 onDispose {}
             }
 
-            val windowSizeClass = calculateWindowSizeClass(this)
+            if (showBrandSplash) {
+                JukeSplashScreen(onFinished = { showBrandSplash = false })
+            } else {
+                val windowSizeClass = calculateWindowSizeClass(this)
 
-            TvManiacTheme(
-                appTheme = appTheme,
-                windowWidthSizeClass = windowSizeClass.widthSizeClass,
-                fontSizePercent = appUiState.fontSizePercent,
-                posterWidthScale = appUiState.posterWidthScale,
-                landscapeWidthScale = appUiState.landscapeWidthScale,
-                posterCornerRadius = appUiState.posterCornerRadius.dp,
-            ) {
-                CompositionLocalProvider(
-                    LocalHapticFeedbackEnabled provides appUiState.hapticFeedbackEnabled,
-                    LocalBlurUnwatchedEnabled provides appUiState.blurImage,
+                TvManiacTheme(
+                    appTheme = appTheme,
+                    windowWidthSizeClass = windowSizeClass.widthSizeClass,
+                    fontSizePercent = appUiState.fontSizePercent,
+                    posterWidthScale = appUiState.posterWidthScale,
+                    landscapeWidthScale = appUiState.landscapeWidthScale,
+                    posterCornerRadius = appUiState.posterCornerRadius.dp,
                 ) {
-                    graph.AppRootContent()
+                    CompositionLocalProvider(
+                        LocalHapticFeedbackEnabled provides appUiState.hapticFeedbackEnabled,
+                        LocalBlurUnwatchedEnabled provides appUiState.blurImage,
+                    ) {
+                        graph.AppRootContent()
+                    }
                 }
             }
         }

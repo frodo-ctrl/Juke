@@ -1,0 +1,268 @@
+/* ==========================================================================
+   Juke(剧刻) 品牌启动页 · 高保真原型 v2
+   --------------------------------------------------------------------------
+   Design Tokens —— 与项目默认深色主题对齐（来源：Colors.kt DarkColorScheme）
+   --------------------------------------------------------------------------
+   背景（海报墙虚化 + 应用主题色压暗叠加）:
+     bg.image             assets/bg.jpg（AI 生成的虚构海报墙，无版权风险）
+     color.bg.base        #373737   md_theme_dark_background（叠加层基准色）
+     color.bg.surface     #43474C   md_theme_dark_surface（顶部光晕）
+   品牌强调色（应用深色主题 accent / secondary）:
+     color.accent         #FDC704   md_theme_dark_accent（金黄）
+     color.accent-soft    #F7D633   md_theme_dark_secondary
+     color.accent-glow    rgba(253,199,4,.35)  字标辉光
+   文字:
+     color.text           #F8FDFF   md_theme_dark_onSurface
+     color.text-dim       rgba(248,253,255,.62) 口号/状态栏
+     color.text-faint     rgba(248,253,255,.16) 胶片齿孔等弱装饰
+   字体:
+     font.display-en  Georgia, "Times New Roman", serif（英文词标，保持不变）
+     font.cn-name     "Noto Serif SC" 900（碑刻感粗宋体）
+                      回退: "Songti SC","STSong","SimSun", serif
+     font.slogan      "Noto Sans SC" 200（极细现代无衬线，宽字距）
+                      回退: "PingFang SC","Microsoft YaHei", sans-serif
+   字号（原型内手机宽度 336px 下取值，Compose 按 sp 等比换算）:
+     wordmark 46px / 字距 3px      cn-name 18px / 字距 12px
+     slogan 13px / 字距 8px        statusbar 12px
+   间距: 4px 基准（4/8/12/16/24/32/48）
+   圆角: 手机壳 48px / 进度条 999px
+   动效: 入场为错峰淡入上移，单元素 620ms，cubic-bezier(.21,.61,.35,1)
+         延迟序列 0 / .14 / .30s；总入场约 0.92s，建议 1.5~1.8s 后跳转主界面
+   Android 实现备注: Noto Serif SC / Noto Sans SC 需以字体资源内置
+   （res/font + FontFamily），避免依赖系统字体差异
+   ========================================================================== */
+
+:root {
+  --bg-base: #373737;
+  --bg-surface: #43474C;
+  --bg-deep: #2B2B2B;
+  --accent: #FDC704;
+  --accent-soft: #F7D633;
+  --accent-glow: rgba(253, 199, 4, 0.35);
+  --text: #F8FDFF;
+  --text-dim: rgba(248, 253, 255, 0.62);
+  --text-faint: rgba(248, 253, 255, 0.16);
+  --font-display-en: Georgia, "Times New Roman", serif;
+  --font-cn-name: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --font-slogan: "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
+    "Noto Sans CJK SC", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ease-out: cubic-bezier(0.21, 0.61, 0.35, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(900px 480px at 50% -10%, rgba(67, 71, 76, 0.6), transparent 70%),
+    #1D1D1F;
+  color: var(--text);
+  font-family: var(--font-slogan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+}
+
+/* ---------- 预览舞台 ---------- */
+.stage { display: flex; flex-direction: column; align-items: center; gap: 24px; }
+
+.stage-head { text-align: center; }
+.stage-head h1 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--text);
+}
+.stage-head p {
+  margin-top: 8px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+}
+
+.stage-actions { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.replay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-family: var(--font-slogan);
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--accent);
+  background: rgba(253, 199, 4, 0.08);
+  border: 1px solid rgba(253, 199, 4, 0.35);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 160ms var(--ease-out), border-color 160ms var(--ease-out);
+}
+.replay-btn:hover { background: rgba(253, 199, 4, 0.16); border-color: rgba(253, 199, 4, 0.6); }
+.stage-note { font-size: 11px; letter-spacing: 0.5px; color: rgba(248, 253, 255, 0.4); }
+
+/* ---------- 手机壳 ---------- */
+.phone {
+  padding: 10px;
+  border-radius: 56px;
+  background: linear-gradient(160deg, #23282A, #101312);
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 120px rgba(67, 71, 76, 0.5);
+}
+.phone-frame {
+  width: 336px;
+  height: 692px;
+  border-radius: 48px;
+  overflow: hidden;
+  background: var(--bg-base);
+}
+
+/* ---------- 启动页本体 ---------- */
+.splash {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 背景：海报墙图片，轻度虚化、保留可辨识度（assets/bg.jpg） */
+.splash-bgimg {
+  position: absolute;
+  inset: 0;
+  background: url("assets/bg.jpg") center / cover no-repeat;
+  filter: blur(3px) saturate(1.1);
+  transform: scale(1.04); /* 放大以遮盖虚化产生的白边 */
+}
+
+/* 压暗叠加层：整体轻度压暗 + 文字区中央暗 scrim，保证可读性且海报墙清晰可辨 */
+.splash-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(70% 46% at 50% 52%, rgba(20, 20, 20, 0.42) 0%, rgba(20, 20, 20, 0.2) 55%, transparent 78%),
+    radial-gradient(140% 62% at 50% -12%, rgba(67, 71, 76, 0.18) 0%, rgba(55, 55, 55, 0.26) 52%, rgba(43, 43, 43, 0.35) 78%),
+    linear-gradient(180deg, rgba(43, 43, 43, 0.05) 0%, rgba(43, 43, 43, 0.3) 100%);
+}
+
+/* 暗角 */
+.splash-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 46%, transparent 58%, rgba(0, 0, 0, 0.25) 100%);
+}
+
+/* 胶片颗粒（内联 SVG 噪点，离线可用） */
+.splash-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 状态栏 */
+.statusbar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px 0;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+}
+.statusbar-icons { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ---------- 品牌主体 ---------- */
+.lockup {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 48px;
+  text-align: center;
+}
+
+/* 英文词标：纯白 + 柔和白色辉光，保证海报墙背景上的可读性 */
+.wordmark {
+  font-family: var(--font-display-en);
+  font-size: 46px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 3px;
+  line-height: 1.1;
+  color: #FFFFFF;
+  filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.28));
+}
+
+/* 中文名：粗宋体碑刻感，宽字距 */
+.cn-name {
+  margin-top: 20px;
+  font-family: var(--font-cn-name);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 12px;
+  text-indent: 12px; /* 抵消末字字距，保持视觉居中 */
+  color: var(--text);
+}
+
+/* 口号：极细无衬线 + 更宽字距，与粗宋体名形成轻重反差 */
+.slogan {
+  margin-top: 28px;
+  font-family: var(--font-slogan);
+  font-size: 13px;
+  font-weight: 200;
+  letter-spacing: 8px;
+  text-indent: 8px;
+  color: var(--text-dim);
+}
+
+/* Home 指示条 */
+.home-indicator {
+  position: relative;
+  z-index: 2;
+  width: 112px;
+  height: 4px;
+  margin: 0 auto 12px;
+  border-radius: 999px;
+  background: rgba(248, 253, 255, 0.24);
+}
+
+/* ---------- 入场动效：错峰淡入上移 ---------- */
+.is-anim .wordmark,
+.is-anim .cn-name,
+.is-anim .slogan {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: rise 620ms var(--ease-out) forwards;
+}
+.is-anim .wordmark    { animation-delay: 0s; }
+.is-anim .cn-name     { animation-delay: 0.14s; }
+.is-anim .slogan      { animation-delay: 0.3s; }
+
+@keyframes rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-anim .wordmark,
+  .is-anim .cn-name,
+  .is-anim .slogan {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 小屏适配 */
+@media (max-width: 420px) {
+  body { padding: 24px 12px; }
+  .phone-frame { width: 300px; height: 620px; }
+  .wordmark { font-size: 40px; }
+}

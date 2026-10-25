@@ -9,12 +9,12 @@
 
   <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
     <item name="windowSplashScreenBackground">@color/splash_background</item>
-    <item name="android:windowLightStatusBar">true</item>
-    <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    <item name="android:windowLightStatusBar">false</item>
+    <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
   </style>
 
   <style name="Theme.TvManiac.Splash" parent="NightAdjusted.Theme.Splash">
-    <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_launcher</item>
+    <item name="windowSplashScreenAnimatedIcon">@drawable/juke_splash_wordmark</item>
     <item name="postSplashScreenTheme">@style/Theme.TvManiac</item>
   </style>
 
