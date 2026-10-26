@@ -4,43 +4,41 @@ import com.arkivanov.decompose.ComponentContext
 import kotlin.reflect.KClass
 
 /**
- * Maps a [BaseRoute] to its [RootChild] wrapper through one of three subtypes.
+ * 通过三个子类型之一将 [BaseRoute] 映射到其 [RootChild] 包装器。
  *
- * Each feature contributes one [NavDestination] subtype via `@ContributesIntoSet(ActivityScope::class)`
- * (typically through codegen). The hosts (`DefaultRootPresenter` for the overlay slot,
- * `HomePresenter` for the multi-stack body) collect every contribution as `Set<NavDestination<*>>`,
- * filter by subtype, match by route class, and delegate to [Screen.createChild],
- * [Overlay.createChild], or [TabRoot.createChild]. A central when-block stays out of the root module.
+ * 每个功能通过 `@ContributesIntoSet(ActivityScope::class)` 贡献一个 [NavDestination] 子类型
+ * （通常通过 codegen）。宿主（overlay slot 的 `DefaultRootPresenter`，多栈主体的 `HomePresenter`）
+ * 收集每个贡献为 `Set<NavDestination<*>>`，按子类型过滤，按路由类匹配，并委托给 [Screen.createChild]、
+ * [Overlay.createChild] 或 [TabRoot.createChild]。集中的 when 块不进入根模块。
  *
- * The three subtypes mirror the runtime dispatch in [Navigator.navigateTo]:
- * - [Screen]: pushed onto the active tab's back stack.
- * - [Overlay]: activated as a modal in the overlay slot.
- * - [TabRoot]: the bottom-of-stack entry for one of the registered [NavRoot] tabs.
+ * 三个子类型对应 [Navigator.navigateTo] 中的运行时分发：
+ * - [Screen]：推送到活动标签页的返回栈。
+ * - [Overlay]：在覆盖层插槽中作为模态激活。
+ * - [TabRoot]：已注册 [NavRoot] 标签页之一的栈底条目。
  *
- * @param R route type this destination matches.
- * @property routeClass matched against incoming [BaseRoute] instances at dispatch time.
+ * @param R 此目标匹配的路由类型。
+ * @property routeClass 在分发时与传入的 [BaseRoute] 实例进行匹配。
  */
 public sealed class NavDestination<out R : BaseRoute>(
     public val routeClass: KClass<out R>,
 ) {
-    /** Returns `true` if this destination handles [route]. */
+    /** 如果此目标处理 [route]，返回 `true`。 */
     public fun matches(route: BaseRoute): Boolean = routeClass.isInstance(route)
 
     /**
-     * Stack screen pushed via [Navigator.navigateTo] onto the active tab's back stack.
+     * 通过 [Navigator.navigateTo] 推送到活动标签页返回栈上的栈屏幕。
      *
-     * @param R route subtype this destination matches.
+     * @param R 此目标匹配的路由子类型。
      */
     public class Screen<R : NavRoute>(
         routeClass: KClass<R>,
         private val factory: (R, ComponentContext) -> RootChild,
     ) : NavDestination<R>(routeClass) {
         /**
-         * Creates the [RootChild] for [route] using the configured factory. Callers verify the
-         * route's class matches [routeClass] before calling.
+         * 使用配置的工厂为 [route] 创建 [RootChild]。调用方在调用前验证路由的类与 [routeClass] 匹配。
          *
-         * @param route stack entry matched against [routeClass].
-         * @param componentContext Decompose context for the new child.
+         * @param route 与 [routeClass] 匹配的栈条目。
+         * @param componentContext 新子组件的 Decompose 上下文。
          */
         @Suppress("UNCHECKED_CAST")
         public fun createChild(route: BaseRoute, componentContext: ComponentContext): RootChild =
@@ -48,21 +46,21 @@ public sealed class NavDestination<out R : BaseRoute>(
     }
 
     /**
-     * Modal overlay activated via [Navigator.navigateTo] when the route also implements
-     * [OverlayRoute]. The host (typically `DefaultRootPresenter`) renders this in the overlay slot.
+     * 当路由也实现 [OverlayRoute] 时，通过 [Navigator.navigateTo] 激活的模态覆盖层。
+     * 宿主（通常是 `DefaultRootPresenter`）在覆盖层插槽中渲染它。
      *
-     * @param R route subtype this destination matches.
+     * @param R 此目标匹配的路由子类型。
      */
     public class Overlay<R : NavRoute>(
         routeClass: KClass<R>,
         private val factory: (R, ComponentContext) -> RootChild,
     ) : NavDestination<R>(routeClass) {
         /**
-         * Creates the [RootChild] for [route] using the configured factory. The result is rewrapped
-         * by `DefaultRootPresenter.createOverlay` for the overlay slot.
+         * 使用配置的工厂为 [route] 创建 [RootChild]。结果由 `DefaultRootPresenter.createOverlay`
+         * 重新包装用于覆盖层插槽。
          *
-         * @param route overlay route matched against [routeClass].
-         * @param componentContext Decompose context for the new child.
+         * @param route 与 [routeClass] 匹配的覆盖层路由。
+         * @param componentContext 新子组件的 Decompose 上下文。
          */
         @Suppress("UNCHECKED_CAST")
         public fun createChild(route: BaseRoute, componentContext: ComponentContext): RootChild =
@@ -70,21 +68,20 @@ public sealed class NavDestination<out R : BaseRoute>(
     }
 
     /**
-     * Tab root anchoring its own back stack. Resolved by `HomePresenter` when projecting the
-     * [com.arkivanov.decompose.router.stack.ChildStack] for each registered tab.
+     * 锚定其自身返回栈的标签页根节点。由 `HomePresenter` 在为每个已注册标签页投影
+     * [com.arkivanov.decompose.router.stack.ChildStack] 时解析。
      *
-     * @param R [NavRoot] subtype this destination matches.
+     * @param R 此目标匹配的 [NavRoot] 子类型。
      */
     public class TabRoot<R : NavRoot>(
         routeClass: KClass<R>,
         private val factory: (R, ComponentContext) -> RootChild,
     ) : NavDestination<R>(routeClass) {
         /**
-         * Creates the [RootChild] for [route] using the configured factory. Invoked once for each
-         * tab when the host stack is built.
+         * 使用配置的工厂为 [route] 创建 [RootChild]。在构建宿主栈时，为每个标签页调用一次。
          *
-         * @param route tab anchor matched against [routeClass].
-         * @param componentContext Decompose context for the new child.
+         * @param route 与 [routeClass] 匹配的标签页锚点。
+         * @param componentContext 新子组件的 Decompose 上下文。
          */
         @Suppress("UNCHECKED_CAST")
         public fun createChild(route: BaseRoute, componentContext: ComponentContext): RootChild =

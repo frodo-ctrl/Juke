@@ -4,15 +4,15 @@ import androidx.compose.runtime.Composable
 import com.thomaskioko.tvmaniac.navigation.SheetChild
 
 /**
- * Platform-side renderer for a [SheetChild] in the root modal sheet slot.
+ * 根模态 sheet 插槽中 [SheetChild] 的平台侧渲染器。
  *
- * Sheet counterpart to [ScreenContent]. Each sheet-owning feature `ui` module contributes one
- * [SheetContent] through `@ContributesTo(ActivityScope::class)`. The root Compose consumer
- * iterates the injected `Set<SheetContent>`, picks the first whose [matches] returns `true`, and
- * invokes [content] to render the sheet.
+ * [ScreenContent] 的 sheet 对应物。每个拥有 sheet 的功能 `ui` 模块通过
+ * `@ContributesTo(ActivityScope::class)` 贡献一个 [SheetContent]。
+ * 根 Compose 消费者遍历注入的 `Set<SheetContent>`，选取第一个 [matches] 返回
+ * `true` 的，并调用 [content] 渲染 sheet。
  *
- * @property matches predicate that returns `true` when this content can render the given child.
- * @property content composable invoked with the matched child.
+ * @property matches 当此内容可以渲染给定子组件时返回 `true` 的谓词。
+ * @property content 使用匹配的子组件调用的可组合项。
  */
 public class SheetContent(
     public val matches: (SheetChild) -> Boolean,

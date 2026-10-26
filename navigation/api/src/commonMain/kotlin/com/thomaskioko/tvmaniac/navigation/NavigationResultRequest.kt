@@ -4,23 +4,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
 
 /**
- * Represents a pending request for a result from another destination.
+ * 表示来自另一个目标的待处理结果请求。
  *
- * Create one by injecting [NavigationResultRegistry] and calling
- * [registerForNavigationResult] from the source screen. Pass [key] into the target route so the
- * target can match deliveries back to this request.
+ * 通过注入 [NavigationResultRegistry] 并从源屏幕调用 [registerForNavigationResult]
+ * 来创建一个。将 [key] 传入目标路由，以便目标可以将投递匹配回此请求。
  *
- * @param R result type expected from the target destination.
- * @property key identifier embedded in the target route to match deliveries.
- * @property results flow that emits each delivered result.
+ * @param R 目标目标期望的结果类型。
+ * @property key 嵌入在目标路由中以匹配投递的标识符。
+ * @property results 发出每个投递结果的 flow。
  */
 public class NavigationResultRequest<R : Any> @PublishedApi internal constructor(
     public val key: Key<R>,
     public val results: Flow<R>,
 ) {
     /**
-     * Identifier for a pending navigation-result. The key is [Serializable] so it can be embedded
-     * inside a [NavRoute] and round-trip through save/restore.
+     * 待处理导航结果的标识符。该 key 是 [Serializable] 的，因此可以嵌入在
+     * [NavRoute] 中并通过保存/恢复往返传递。
      */
     @Serializable
     public data class Key<R : Any>(

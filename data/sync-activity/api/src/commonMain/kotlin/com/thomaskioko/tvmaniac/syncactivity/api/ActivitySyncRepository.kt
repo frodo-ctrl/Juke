@@ -4,42 +4,38 @@ import com.thomaskioko.tvmaniac.syncactivity.api.model.ActivityType
 import kotlin.time.Instant
 
 /**
- * Tracks per-consumer sync positions for activity timestamps, scoped to the active provider.
+ * 跟踪每个消费者的活动时间戳同步位置，作用域为活动提供者。
  *
- * Replaces the shared `trakt_last_activity.synced_remote_timestamp` column, which had multiple writers
- * and let one consumer's mark suppress every other consumer's read. Each entry tracks its own "synced
- * up to" position against the remote `remote_timestamp` for a given [ActivityType]. The implementation
- * keys checkpoints on the active connected provider, so Trakt and a future Simkl account never collide;
- * callers never pass a provider, and adding a provider needs no call-site change.
+ * 替换了共享的 `trakt_last_activity.synced_remote_timestamp` 列，该列有多个写入器
+ * 并导致一个消费者的标记抑制了所有其他消费者的读取。每个条目跟踪其针对给定 [ActivityType]
+ * 远程 `remote_timestamp` 的自己的"已同步至"位置。实现将检查点键控在活动连接的提供者上，
+ * 因此 Trakt 和未来的 Simkl 账户不会冲突；调用方永远不需要传递提供者，添加提供者也不需要调用站点变更。
  */
 public interface ActivitySyncRepository {
 
     /**
-     * Whether the remote timestamp for [activityType] is ahead of the active provider's checkpoint for
-     * [consumerId].
+     * [activityType] 的远程时间戳是否领先于 [consumerId] 在活动提供者上的检查点。
      *
-     * Returns true when no checkpoint exists yet (first sync). Returns false when no provider is
-     * connected, or when no remote timestamp is recorded for this activity (never fetched); callers must
-     * run the activity fetch before consulting the gate.
+     * 当尚不存在检查点（首次同步）时返回 true。当未连接提供者时返回 false，
+     * 或此活动未记录远程时间戳（从未获取）；调用方必须先运行活动获取再检查此门控。
      */
     public suspend fun isAheadOf(consumerId: String, activityType: ActivityType): Boolean
 
     /**
-     * Records [consumerId] as synced up to the current remote timestamp for [activityType], under the
-     * active provider. No-op when no provider is connected or no remote timestamp is recorded.
+     * 在活动提供者下，将 [consumerId] 记录为已同步至 [activityType] 的当前远程时间戳。
+     * 未连接提供者或未记录远程时间戳时无操作。
      */
     public suspend fun markSyncedTo(consumerId: String, activityType: ActivityType)
 
     /**
-     * Last-synced timestamp for the active provider's [consumerId] checkpoint against [activityType], or
-     * null when no provider is connected or no checkpoint exists. Used as a query cursor by consumers
-     * that need an incremental "since" parameter.
+     * 活动提供者的 [consumerId] 检查点针对 [activityType] 的上次同步时间戳，
+     * 或未连接提供者或不存在检查点时为 null。供需要增量"since"参数的消费者用作查询游标。
      */
     public suspend fun getSyncTimestamp(consumerId: String, activityType: ActivityType): Instant?
 
     /**
-     * Removes every checkpoint across all providers. Called from `LogoutInteractor` so an account switch
-     * does not carry the previous account's positions into the new account's sync.
+     * 跨所有提供者移除每个检查点。从 `LogoutInteractor` 调用，
+     * 以便账户切换不会将之前账户的位置带入新账户的同步。
      */
     public suspend fun clearAll()
 }

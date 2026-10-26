@@ -5,16 +5,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.LocalDate
 
 /**
- * Type-safe handle to a feature flag. Consumers inject `@QualifierAnnotation FeatureFlag<T>`,
- * where the qualifier annotation identifies which flag and `T` is the value type (today only
- * `Boolean`). Bindings live in the implementation module's `FlagBindings` interface; the debug
- * screen iterates the same flags through the `Set<FeatureFlag<Boolean>>` multibinding contributed
- * alongside each qualified binding.
+ * 功能 flag 的类型安全句柄。消费者注入 `@QualifierAnnotation FeatureFlag<T>`，
+ * 其中限定注解标识哪个 flag，`T` 是值类型（目前只有 `Boolean`）。
+ * 绑定位于实现模块的 `FlagBindings` 接口中；调试屏幕通过随每个限定绑定一起贡献的
+ * `Set<FeatureFlag<Boolean>>` 多绑定遍历相同的 flag。
  *
- * @property key Firebase Remote Config key. Drives both Firebase lookups and debug-store overrides.
- * @property title Human-readable name. Shown on the debug screen row.
- * @property description One-line summary. Shown beneath the title on the debug screen.
- * @property dateAdded Date the flag entered the codebase. Drives the debug screen's "Date Added" sort.
+ * @property key Firebase Remote Config key。驱动 Firebase 查找和调试存储覆盖。
+ * @property title 人类可读名称。显示在调试屏幕行上。
+ * @property description 单行摘要。显示在调试屏幕标题下方。
+ * @property dateAdded flag 进入代码库的日期。驱动调试屏幕的"添加日期"排序。
  */
 public interface FeatureFlag<T> {
     public val key: String
@@ -23,14 +22,14 @@ public interface FeatureFlag<T> {
     public val dateAdded: LocalDate
 
     /**
-     * Observes the flag's current value. Emits updates from the Firebase realtime listener and,
-     * in debug builds, from local overrides.
+     * 观察 flag 的当前值。发出来自 Firebase 实时监听器的更新，
+     * 以及在 debug 构建中来自本地覆盖的更新。
      */
     public fun observe(): Flow<T>
 
     /**
-     * Observes the source of the current value. Emits [FeatureFlagSource.Local] when a debug
-     * override is active, otherwise [FeatureFlagSource.Firebase].
+     * 观察当前值的来源。当调试覆盖激活时发出 [FeatureFlagSource.Local]，
+     * 否则发出 [FeatureFlagSource.Firebase]。
      */
     public fun observeSource(): Flow<FeatureFlagSource>
 }

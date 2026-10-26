@@ -12,15 +12,15 @@ import kotlinx.serialization.modules.polymorphic
 import kotlin.reflect.KClass
 
 /**
- * Composes every [NavRouteBinding] contributed at [ActivityScope] into one polymorphic
- * [KSerializer] of [NavRoute].
+ * 将每个在 [ActivityScope] 贡献的 [NavRouteBinding] 组合成一个
+ * [NavRoute] 的多态 [KSerializer]。
  *
- * Decompose's per-tab `childStack(serializer = ...)` uses the result so back stacks survive
- * configuration change and process death. The constructor validates that at least one binding
- * is present and that no [NavRoute] subclass contributes more than once. Validation runs at
- * construction so misconfigured graphs fail before any navigation happens.
+ * Decompose 的每标签页 `childStack(serializer = ...)` 使用结果，以便返回栈
+ * 在配置更改和进程死亡后仍然存活。构造函数验证至少存在一个绑定，
+ * 且没有 [NavRoute] 子类贡献超过一次。验证在构造时运行，
+ * 以便配置错误的图在任何导航发生之前失败。
  *
- * @param bindings polymorphic serializer entries for each registered [NavRoute] subclass.
+ * @param bindings 每个已注册 [NavRoute] 子类的多态序列化器条目。
  */
 @OptIn(ExperimentalStateKeeperApi::class, ExperimentalSerializationApi::class)
 @SingleIn(ActivityScope::class)

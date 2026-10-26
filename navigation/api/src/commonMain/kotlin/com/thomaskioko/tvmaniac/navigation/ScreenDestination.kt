@@ -1,15 +1,14 @@
 package com.thomaskioko.tvmaniac.navigation
 
 /**
- * Wraps a feature presenter as a [RootChild] in the active back stack.
+ * 将功能 presenter 包装为活动返回栈中的 [RootChild]。
  *
- * One generic wrapper avoids a child class for each feature (for example `SettingsDestination`,
- * `DebugDestination`) and keeps `navigation/api` free of presenter-specific types. The concrete
- * presenter type [T] is known only at the creation site (the feature's [NavDestination]) and at
- * the consumption site (the platform UI), which pattern-matches on [presenter] to render the
- * correct screen.
+ * 一个泛型包装器避免了为每个功能创建子类（例如 `SettingsDestination`、`DebugDestination`），
+ * 并使 `navigation/api` 不包含 presenter 特定的类型。具体的 presenter 类型 [T]
+ * 仅在创建站点（功能的 [NavDestination]）和消费站点（平台 UI）处已知，
+ * 后者对 [presenter] 进行模式匹配以渲染正确的屏幕。
  *
- * @param T presenter type held by this destination.
- * @property presenter screen presenter rendered by the platform UI.
+ * @param T 此目标持有的 presenter 类型。
+ * @property presenter 由平台 UI 渲染的屏幕 presenter。
  */
 public class ScreenDestination<out T : Any>(public val presenter: T) : RootChild

@@ -160,7 +160,7 @@
     <string name="notification_permission_denied_cancel">Cancel</string>
 
 
-    <string name="app_name">Tv Maniac</string>
+    <string name="app_name">Juke</string>
     <string name="menu_item_discover">Discover</string>
     <string name="menu_item_search">Search</string>
     <string name="menu_item_follow">Following</string>
@@ -315,9 +315,9 @@
     <string name="trakt_dialog_logout_message">Are you sure you want to logout? Don\'t worry, you will still have your content stored on your device.</string>
 
     <string name="settings_theme_description">Choose between light and dark color palettes for backgrounds, headers and text.</string>
-    <string name="settings_about_description">TvManiac is a beautifully crafted Kotlin Multiplatform app for discovering and tracking your favorite TV shows. Browse trending, popular, and top-rated shows, manage your watchlist, track episodes you\'ve watched, and sync everything with your Trakt account across Android and iOS.</string>
+    <string name="settings_about_description">Juke is a beautifully crafted Kotlin Multiplatform app for discovering and tracking your favorite TV shows. Browse trending, popular, and top-rated shows, manage your watchlist, track episodes you\'ve watched, and sync everything with your Trakt account across Android and iOS.</string>
     <string name="settings_about_api_disclaimer">This product uses the TMDB and Trakt API but is not endorsed or certified by either.</string>
-    <string name="settings_about_app_name">TvManiac</string>
+    <string name="settings_about_app_name">Juke</string>
     <string name="settings_about_version">Version %s</string>
     <string name="settings_about_github">GitHub</string>
     <string name="settings_about_source_code">Source Code</string>

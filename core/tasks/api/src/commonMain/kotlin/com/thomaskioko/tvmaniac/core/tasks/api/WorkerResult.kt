@@ -1,19 +1,19 @@
 package com.thomaskioko.tvmaniac.core.tasks.api
 
 /**
- * Outcome of a [BackgroundWorker.doWork] execution.
+ * [BackgroundWorker.doWork] 执行的结果。
  *
- * Platform schedulers map these results to their native equivalents
- * (e.g., `ListenableWorker.Result` on Android, `BGTask.setTaskCompleted` on iOS).
+ * 平台调度器将这些结果映射到其原生等价物
+ * （例如 Android 上的 `ListenableWorker.Result`，iOS 上的 `BGTask.setTaskCompleted`）。
  */
 public sealed class WorkerResult {
 
-    /** The work completed successfully. */
+    /** 工作成功完成。 */
     public data object Success : WorkerResult()
 
-    /** The work failed transiently and should be retried by the OS. */
+    /** 工作暂时失败，应由操作系统重试。 */
     public data class Retry(val message: String? = null, val cause: Throwable? = null) : WorkerResult()
 
-    /** The work failed permanently. The OS will not retry automatically. */
+    /** 工作永久失败。操作系统不会自动重试。 */
     public data class Failure(val message: String? = null, val cause: Throwable? = null) : WorkerResult()
 }

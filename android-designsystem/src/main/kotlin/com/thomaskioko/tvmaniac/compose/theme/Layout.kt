@@ -10,30 +10,30 @@ import androidx.compose.ui.unit.dp
 import kotlin.math.roundToInt
 
 /**
- * Current window width size class, provided once at the root from `calculateWindowSizeClass`.
- * Defaults to [WindowWidthSizeClass.Compact] for previews and tests.
+ * 当前窗口宽度大小类，在根节点从 `calculateWindowSizeClass` 提供一次。
+ * 预览和测试默认为 [WindowWidthSizeClass.Compact]。
  */
 public val LocalWindowWidthSizeClass: ProvidableCompositionLocal<WindowWidthSizeClass> =
     staticCompositionLocalOf { WindowWidthSizeClass.Compact }
 
 /**
- * Size multiplier for portrait poster cards, provided from the user's poster style preference.
- * Scales [Layout.posterWidth] and derives [Layout.posterColumns]. Defaults to 1.0 (Standard),
- * which reproduces the responsive base sizes exactly.
+ * 竖版海报卡片的尺寸乘数，从用户的海报样式偏好提供。
+ * 缩放 [Layout.posterWidth] 并派生 [Layout.posterColumns]。默认为 1.0（标准），
+ * 精确复制响应式基础尺寸。
  */
 public val LocalPosterWidthScale: ProvidableCompositionLocal<Float> =
     staticCompositionLocalOf { 1f }
 
 /**
- * Size multiplier for landscape (16:9 backdrop) cards, provided from the user's poster style
- * preference. Scales [Layout.backdropCardWidth]. Defaults to 1.0 (Standard).
+ * 横版（16:9 背景）卡片的尺寸乘数，从用户的海报样式偏好提供。
+ * 缩放 [Layout.backdropCardWidth]。默认为 1.0（标准）。
  */
 public val LocalLandscapeWidthScale: ProvidableCompositionLocal<Float> =
     staticCompositionLocalOf { 1f }
 
 /**
- * Corner radius applied to every poster, provided from the user's poster style preference.
- * Defaults to 0.dp (Sharp), reproducing the current square-cornered posters.
+ * 应用于每张海报的圆角半径，从用户的海报样式偏好提供。
+ * 默认为 0.dp（Sharp），复制当前的直角海报。
  */
 public val LocalPosterCornerRadius: ProvidableCompositionLocal<Dp> =
     staticCompositionLocalOf { 0.dp }
@@ -67,8 +67,8 @@ public object Layout {
         }
 
     /**
-     * Responsive poster width that ignores the user's poster size preference. Used by list-row
-     * thumbnails and other fixed-layout surfaces that should not resize with the preference.
+     * 忽略用户海报尺寸偏好的响应式海报宽度。
+     * 用于列表行缩略图和其他不应随偏好调整大小的固定布局表面。
      */
     public val posterWidthFixed: Dp
         @Composable @ReadOnlyComposable
@@ -101,7 +101,7 @@ public object Layout {
             else -> 112.dp
         }
 
-    /** Artwork width for compact list rows, matching the iOS `ImageDimens.compactThumbnailWidth`. */
+    /** 紧凑列表行的图片宽度，匹配 iOS `ImageDimens.compactThumbnailWidth`。 */
     public val compactThumbnailWidth: Dp
         @Composable @ReadOnlyComposable
         get() = when (LocalWindowWidthSizeClass.current) {
@@ -112,8 +112,8 @@ public object Layout {
 }
 
 /**
- * Fixed image tokens that do not depend on the window size class: aspect ratios (expressed as
- * width / height, matching `Modifier.aspectRatio` semantics) and hero/parallax heights.
+ * 不依赖窗口大小类的固定图片 token：宽高比（以 width / height 表示，
+ * 匹配 `Modifier.aspectRatio` 语义）和 hero/视差高度。
  */
 public object ImageDimens {
     public val PosterAspect: Float = 2f / 3f

@@ -3,44 +3,39 @@ package com.thomaskioko.tvmaniac.core.tasks.api
 public interface BackgroundTaskScheduler {
 
     /**
-     * Registers a periodic task with the OS scheduler. No work is executed immediately;
-     * the OS decides when to trigger the task based on system conditions and the
-     * requested [PeriodicTaskRequest.intervalMs].
+     * 向操作系统调度器注册周期性任务。不会立即执行任何工作；
+     * 操作系统根据系统条件和请求的 [PeriodicTaskRequest.intervalMs] 决定何时触发任务。
      *
-     * Use this on app launch to ensure background jobs are registered without
-     * causing unnecessary network calls at startup.
+     * 在应用启动时使用它来确保后台作业已注册，而不会在启动时造成不必要的网络调用。
      *
-     * All periodic workers route through this entry point and are dispatched by
-     * the platform-specific funnel (Android: `SchedulerDispatchWorker`; iOS:
-     * `IosTaskScheduler.executeWithinWindow`).
+     * 所有周期性 worker 都通过此入口点路由，并由平台特定的 funnel
+     * （Android：`SchedulerDispatchWorker`；iOS：`IosTaskScheduler.executeWithinWindow`）分发。
      */
     public fun schedulePeriodic(request: PeriodicTaskRequest)
 
     /**
-     * Registers a periodic task **and** runs it immediately. Use this for
-     * user-initiated actions (e.g., toggling notifications on) where the user
-     * expects an immediate result in addition to future periodic execution.
+     * 注册周期性任务 **并** 立即运行它。用于用户发起的操作
+     * （例如开启通知切换），用户期望立即结果以及未来的周期性执行。
      */
     public fun scheduleAndExecute(request: PeriodicTaskRequest)
 
     /**
-     * Cancels a previously scheduled task by its unique [id].
+     * 通过其唯一 [id] 取消之前调度的任务。
      *
-     * @param id The worker name / task identifier used when scheduling.
+     * @param id 调度时使用的 worker 名称 / 任务标识符。
      */
     public fun cancel(id: String)
 
     /**
-     * Cancels all scheduled tasks managed by this scheduler.
+     * 取消此调度器管理的所有已调度任务。
      */
     public fun cancelAll()
 
     /**
-     * Re-submits all currently active periodic requests to the OS scheduler.
+     * 将所有当前活动的周期性请求重新提交给操作系统调度器。
      *
-     * This is only meaningful on iOS, where `BGTaskScheduler` requires tasks to be
-     * re-submitted each time the app enters the background. The default implementation
-     * is a no-op for platforms that don't need this behavior.
+     * 这仅在 iOS 上有意义，其中 `BGTaskScheduler` 要求每次应用进入后台时
+     * 重新提交任务。默认实现对于不需要此行为的平台是无操作。
      */
     public fun rescheduleBackgroundTask() {}
 }

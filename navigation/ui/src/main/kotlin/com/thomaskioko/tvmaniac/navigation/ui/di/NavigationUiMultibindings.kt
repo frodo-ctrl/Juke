@@ -7,14 +7,11 @@ import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Multibinds
 
 /**
- * Declares the two Compose-side multibinding sets feature `ui` modules contribute into.
- * Contributed at [ActivityScope] so each feature module ships its own renderers without touching
- * a central graph.
+ * 声明功能 `ui` 模块贡献到的两个 Compose 侧多绑定 set。
+ * 在 [ActivityScope] 贡献，以便每个功能模块提供自己的渲染器而无需触及集中图。
  *
- * - `Set<ScreenContent>`: matches one entry in the root navigation stack and renders the
- *   matching Compose screen.
- * - `Set<SheetContent>`: matches one entry in the modal sheet slot and renders the matching
- *   Compose sheet.
+ * - `Set<ScreenContent>`：匹配根导航栈中的一个条目并渲染匹配的 Compose 屏幕。
+ * - `Set<SheetContent>`：匹配模态 sheet 插槽中的一个条目并渲染匹配的 Compose sheet。
  */
 @ContributesTo(ActivityScope::class)
 public interface NavigationUiMultibindings {

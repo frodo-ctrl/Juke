@@ -44,11 +44,11 @@ public class FakeDatastoreRepository : DatastoreRepository {
     }
 
     /**
-     * Non-suspending opt-in setter for tests that need to override the permission-asked default
-     * before the activity launches. The interface counterpart [setNotificationPermissionAsked] is
-     * suspend, which deadlocks under `runBlocking` when the Compose Robolectric harness installs a
-     * `TestDispatcher` as `Dispatchers.Main` (every dispatcher role binds to Main via
-     * `IntegrationTestDispatcherBindings`). Use this from `@Before` to store state synchronously.
+     * 用于需要在 activity 启动前覆盖权限已询问默认值的测试的非挂起选择加入 setter。
+     * 接口对应方法 [setNotificationPermissionAsked] 是 suspend，
+     * 当 Compose Robolectric harness 将 `TestDispatcher` 安装为 `Dispatchers.Main`
+     * （每个调度器角色通过 `IntegrationTestDispatcherBindings` 绑定到 Main）时，
+     * 会在 `runBlocking` 下死锁。从 `@Before` 使用此方法同步存储状态。
      */
     public fun setNotificationPermissionAskedNow(asked: Boolean) {
         notificationPermissionAskedFlow.value = asked

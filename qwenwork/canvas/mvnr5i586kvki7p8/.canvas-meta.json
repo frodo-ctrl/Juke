@@ -1,0 +1,177 @@
+{
+  "designSystemApproved": false,
+  "activePage": "index.html",
+  "version": 1,
+  "createdAt": "2026-10-25T13:28:01.341Z",
+  "updatedAt": "2026-10-25T16:53:53.219Z",
+  "frames": [
+    {
+      "id": "index",
+      "kind": "html-file",
+      "title": "Main Canvas",
+      "fileName": "index.html",
+      "x": 0,
+      "y": 0,
+      "width": 4096,
+      "height": 3416.3845350052247,
+      "lockedAspectRatio": false,
+      "lockedSize": false,
+      "status": "active",
+      "createdAt": "2026-10-25T13:28:01.349Z",
+      "updatedAt": "2026-10-25T14:03:12.949Z"
+    },
+    {
+      "id": "juke-j",
+      "kind": "snapshot",
+      "workspacePreviewPaths": {
+        "url": "/index.html",
+        "designUrl": "/index.html",
+        "previewUrl": "/index.html",
+        "sourceUrl": "/index.html"
+      },
+      "title": "Juke 图标提案板 · 五版白底黑字 J",
+      "code": {
+        "root": ".",
+        "files": [
+          {
+            "path": "index.html",
+            "role": "entry",
+            "symbol": "Juke Icon Proposal Board"
+          }
+        ]
+      },
+      "x": 1500,
+      "y": 0,
+      "width": 1440,
+      "height": 900,
+      "status": "draft",
+      "source": "imported",
+      "createdAt": "2026-10-25T13:29:23.180Z",
+      "updatedAt": "2026-10-25T13:29:23.180Z"
+    }
+  ],
+  "activeFrameId": "index",
+  "tweaks": [
+    {
+      "control": "preset",
+      "group": "Appearance",
+      "label": "查看方式",
+      "presetOptions": [
+        {
+          "label": "Light · 白纸画廊",
+          "patches": [
+            {
+              "value": "#ffffff",
+              "variable": "--seed-bg"
+            },
+            {
+              "value": "#0a0a0a",
+              "variable": "--seed-fg"
+            },
+            {
+              "value": "#000000",
+              "variable": "--seed-accent"
+            }
+          ],
+          "value": "light"
+        },
+        {
+          "label": "Dark · 反白校验",
+          "patches": [
+            {
+              "value": "#0b0b0b",
+              "variable": "--seed-bg"
+            },
+            {
+              "value": "#ffffff",
+              "variable": "--seed-fg"
+            },
+            {
+              "value": "#ffffff",
+              "variable": "--seed-accent"
+            }
+          ],
+          "value": "dark"
+        },
+        {
+          "label": "墨稿 · 纯黑白印刷",
+          "patches": [
+            {
+              "value": "#ffffff",
+              "variable": "--seed-bg"
+            },
+            {
+              "value": "#000000",
+              "variable": "--seed-fg"
+            },
+            {
+              "value": "#000000",
+              "variable": "--seed-accent"
+            }
+          ],
+          "value": "ink"
+        },
+        {
+          "label": "品牌金黄 · 点亮 E 版三角",
+          "patches": [
+            {
+              "value": "#ffffff",
+              "variable": "--seed-bg"
+            },
+            {
+              "value": "#141414",
+              "variable": "--seed-fg"
+            },
+            {
+              "value": "#FEBD0A",
+              "variable": "--seed-accent"
+            }
+          ],
+          "value": "brand-gold"
+        }
+      ],
+      "selector": ":root",
+      "value": "light",
+      "variable": "--appearance-preset"
+    },
+    {
+      "control": "slider",
+      "group": "Icon",
+      "label": "图标容器圆角",
+      "max": 50,
+      "min": 0,
+      "step": 1,
+      "unit": "%",
+      "value": "22%",
+      "variable": "--seed-radius"
+    },
+    {
+      "control": "slider",
+      "group": "Layout",
+      "label": "版面间距",
+      "max": 44,
+      "min": 16,
+      "step": 2,
+      "unit": "px",
+      "value": "28px",
+      "variable": "--seed-gap"
+    },
+    {
+      "control": "slider",
+      "group": "Review",
+      "label": "构造网格强度",
+      "max": 1,
+      "min": 0,
+      "step": 0.05,
+      "value": "1",
+      "variable": "--seed-grid"
+    },
+    {
+      "control": "color",
+      "group": "Icon",
+      "label": "E 版三角强调色",
+      "value": "#000000",
+      "variable": "--seed-accent"
+    }
+  ]
+}

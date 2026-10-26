@@ -40,7 +40,7 @@ public fun CompactShowRow(
         onClick = onClick,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            // The artwork sits flush against the card edge and sets the row height.
+            // 封面图紧贴卡片边缘并决定行高。
             PosterCard(
                 imageUrl = imageUrl,
                 title = title,

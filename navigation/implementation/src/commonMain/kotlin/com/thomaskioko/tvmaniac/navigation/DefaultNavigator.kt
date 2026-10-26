@@ -21,24 +21,22 @@ import dev.zacsweers.metro.SingleIn
 import kotlin.reflect.KClass
 
 /**
- * Drives every navigation mutation through Decompose's `SimpleNavigation<MultiStackNavEvent>` for
- * the multi-stack body and `SlotNavigation<NavRoute>` for overlays.
+ * 通过 Decompose 的 `SimpleNavigation<MultiStackNavEvent>`（多栈主体）
+ * 和 `SlotNavigation<NavRoute>`（覆盖层）驱动每次导航变更。
  *
- * Hosts call [buildHostNavigation] once per activity to attach the multi-stack tree to a
- * [com.arkivanov.decompose.ComponentContext]; the navigator then routes every public call to the
- * matching Decompose source. [navigateTo] dispatches by type: a [NavRoute] that also implements
- * [OverlayRoute] activates the slot, anything else pushes onto the active tab. Tab switches go
- * through [switchBackStack] (preserves the target's stack) or [showRoot] (clears it).
+ * 宿主在每个 activity 中调用一次 [buildHostNavigation] 将多栈树附加到
+ * [com.arkivanov.decompose.ComponentContext]；然后 navigator 将每个公共调用路由到
+ * 匹配的 Decompose 源。[navigateTo] 按类型分发：同时实现 [OverlayRoute] 的 [NavRoute]
+ * 激活插槽，其他任何内容推送到活动标签页。标签页切换通过 [switchBackStack]（保留目标的栈）
+ * 或 [showRoot]（清除它）进行。
  *
- * The constructor validates that at least one [NavRoot] is registered. The first registered
- * [NavRoot] becomes the initial value of [activeRoot] until [buildHostNavigation] is called or a
- * saved state is restored.
+ * 构造函数验证至少注册了一个 [NavRoot]。第一个注册的 [NavRoot] 成为 [activeRoot] 的初始值，
+ * 直到调用 [buildHostNavigation] 或恢复保存的状态。
  *
- * @param navRouteSerializer polymorphic serializer for [NavRoute] entries pushed onto a tab.
- * @param navRootSerializer polymorphic serializer for [NavRoot] tab anchors.
- * @param baseRouteSerializer combined serializer covering both routes and roots, used for the
- *   per-tab back stacks.
- * @param navRoots tab anchors registered through the navigation multibinding set.
+ * @param navRouteSerializer 推送到标签页上的 [NavRoute] 条目的多态序列化器。
+ * @param navRootSerializer [NavRoot] 标签页锚点的多态序列化器。
+ * @param baseRouteSerializer 覆盖路由和根节点的组合序列化器，用于每个标签页的返回栈。
+ * @param navRoots 通过导航多绑定 set 注册的标签页锚点。
  */
 @SingleIn(ActivityScope::class)
 @ContributesBinding(ActivityScope::class)

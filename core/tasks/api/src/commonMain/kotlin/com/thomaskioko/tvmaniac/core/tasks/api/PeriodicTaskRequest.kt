@@ -1,10 +1,10 @@
 package com.thomaskioko.tvmaniac.core.tasks.api
 
 /**
- * Describes a periodic background task to be scheduled.
+ * 描述要调度的周期性后台任务。
  *
- * Workers typically expose a companion `REQUEST` constant so that all call sites
- * share the same configuration:
+ * Worker 通常暴露一个 companion 的 `REQUEST` 常量，以便所有调用站点
+ * 共享相同的配置：
  * ```kotlin
  * companion object {
  *   const val WORKER_NAME = "com.thomaskioko.tvmaniac.sync.library"
@@ -16,17 +16,16 @@ package com.thomaskioko.tvmaniac.core.tasks.api
  * }
  * ```
  *
- * @property id Unique task identifier. Must match the [BackgroundWorker.workerName]
- *   of the worker that should execute this request.
- * @property intervalMs Minimum interval between executions in milliseconds.
- *   The OS may defer execution beyond this interval based on system conditions.
- *   On Android, WorkManager enforces a 15-minute minimum.
- * @property constraints Optional constraints that must be satisfied before
- *   the OS triggers execution.
- * @property longRunning When `true`, requests extended execution time from the OS.
- *   On iOS this uses `BGProcessingTaskRequest` (minutes of runtime, runs when idle)
- *   instead of `BGAppRefreshTaskRequest` (~30s). On Android this is a no-op since
- *   WorkManager handles execution time automatically.
+ * @property id 唯一任务标识符。必须与应执行此请求的 worker 的
+ *   [BackgroundWorker.workerName] 匹配。
+ * @property intervalMs 两次执行之间的最小间隔（毫秒）。
+ *   操作系统可能会根据系统条件延迟执行超过此间隔。
+ *   在 Android 上，WorkManager 强制要求最少 15 分钟。
+ * @property constraints 可选约束，必须在操作系统触发执行之前满足。
+ * @property longRunning 当为 `true` 时，向操作系统请求延长执行时间。
+ *   在 iOS 上使用 `BGProcessingTaskRequest`（分钟级运行时间，空闲时运行）
+ *   代替 `BGAppRefreshTaskRequest`（约 30 秒）。在 Android 上，由于
+ *   WorkManager 自动处理执行时间，因此是无操作。
  */
 public data class PeriodicTaskRequest(
     val id: String,

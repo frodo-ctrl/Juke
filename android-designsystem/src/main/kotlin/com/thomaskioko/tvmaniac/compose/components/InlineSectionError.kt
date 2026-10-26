@@ -17,9 +17,8 @@ import androidx.compose.ui.tooling.preview.PreviewWrapper
 import com.thomaskioko.tvmaniac.compose.theme.TvManiacSpacing
 
 /**
- * Compact, non-intrusive error for a section that fails to load. Trakt-style: a muted line of text
- * directly under the section title with an optional inline retry link beneath it, left-aligned so
- * the title and error read as one section rather than two floating elements.
+ * 加载失败的分区的紧凑、非侵入式错误。Trakt 风格：在分区标题正下方一行柔和的文本，
+ * 下方有可选的内联重试链接，左对齐使标题和错误读为一个分区而非两个浮动元素。
  */
 @Composable
 public fun InlineSectionError(

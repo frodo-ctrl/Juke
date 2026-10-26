@@ -3,8 +3,8 @@ package com.thomaskioko.tvmaniac.featureflags.flags
 import io.github.thomaskioko.codegen.annotations.FeatureFlag
 
 /**
- * Simkl Login flag. The codegen emits `SimklLoginFlagQualifier` and `SimklLoginFlagBinding` from
- * this anchor; consumers inject `@SimklLoginFlagQualifier FeatureFlag<Boolean>`.
+ * Simkl 登录标志。代码生成器从此锚点发出 `SimklLoginFlagQualifier` 和 `SimklLoginFlagBinding`；
+ * 消费者注入 `@SimklLoginFlagQualifier FeatureFlag<Boolean>`。
  */
 @FeatureFlag(
     key = "simkl_login_enabled",

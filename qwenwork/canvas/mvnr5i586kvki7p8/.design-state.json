@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "updatedAt": "2026-10-25T16:47:05.437Z",
+  "execution": {
+    "status": "lint_checked",
+    "lastLintCheckedAt": "2026-10-25T16:47:05.436Z",
+    "lastLintSummary": {
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "fileCount": 1,
+      "checkedAt": "2026-10-25T16:47:05.436Z"
+    },
+    "tweaksStatus": "provided",
+    "tweaksCount": 5,
+    "nudgeControlSummary": {
+      "total": 5,
+      "color": 1,
+      "nonColor": 4,
+      "slider": 3,
+      "select": 0,
+      "lightTheme": 1,
+      "darkTheme": 1
+    },
+    "hasActiveRenderableFrame": true,
+    "buildStatus": "not_applicable",
+    "noBuildReason": "交付物为 Canvas 工作区根目录的单文件静态 HTML 设计提案板（内联 SVG），不含 React/Vite 工程，无需构建验证。",
+    "completedAt": "2026-10-25T13:29:30.760Z"
+  },
+  "designPlan": {
+    "status": "cancelled",
+    "cancelledAt": "2026-10-25T13:20:35.706Z",
+    "directExecutionRequested": true,
+    "directExecutionReason": "直接执行",
+    "directExecutionAt": "2026-10-25T13:20:35.706Z"
+  }
+}

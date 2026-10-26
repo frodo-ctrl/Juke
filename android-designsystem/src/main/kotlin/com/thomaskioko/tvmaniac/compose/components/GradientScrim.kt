@@ -11,13 +11,11 @@ import androidx.compose.ui.graphics.Color
 import kotlin.math.pow
 
 /**
- * Draws a vertical gradient scrim in the foreground.
+ * 在前景中绘制垂直渐变遮罩。
  *
- * @param color The color of the gradient scrim.
- * @param decay The exponential decay to apply to the gradient. Defaults to `3.0f` which is
- * a cubic decay.
- * @param numStops The number of color stops to draw in the gradient. Higher numbers result in
- * the higher visual quality at the cost of draw performance. Defaults to `16`.
+ * @param color 渐变遮罩的颜色。
+ * @param decay 应用于渐变的指数衰减。默认为 `3.0f`，即三次衰减。
+ * @param numStops 渐变中要绘制的颜色停止点数量。数字越大，视觉质量越高，但会以绘制性能为代价。默认为 `16`。
  */
 @SuppressLint("ComposeModifierComposed")
 public fun Modifier.drawForegroundGradientScrim(

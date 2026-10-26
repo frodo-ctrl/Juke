@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Juke logo · canonical source (120 canvas, black on white) -->
+  <!-- 顶横杠 -->
+  <rect x="58" y="27" width="32" height="8" fill="#000000"/>
+  <!-- J 主笔画：竖笔 + R20 半圆底钩 + 左侧回挑 -->
+  <path d="M76 31 V65 A20 20 0 0 1 36 65 V55" fill="none" stroke="#000000" stroke-width="12" stroke-linecap="butt" stroke-linejoin="round"/>
+  <!-- 播放三角（锁在白腔内） -->
+  <path d="M49 57 L65 65 L49 73 Z" fill="#000000"/>
+</svg>

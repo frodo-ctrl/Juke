@@ -48,18 +48,16 @@ import com.thomaskioko.tvmaniac.presenter.root.model.ToastType
 import io.github.thomaskioko.codegen.annotations.AppRootUi
 
 /**
- * Activity-level host composable. Receives the navigation multibinding sets from the activity
- * graph, publishes [ScreenContent] through [LocalScreenContents] for descendants, and renders
- * [HomeScreen] directly.
+ * Activity 级宿主可组合项。从 activity 图接收导航多绑定 set，
+ * 通过 [LocalScreenContents] 为后代发布 [ScreenContent]，并直接渲染 [HomeScreen]。
  *
- * Annotated with [AppRootUi] so the codegen processor emits the `AppRootProvider` interface and
- * the `AppRootContent` extension that lets the activity collapse the multi-argument call into
- * `graph.AppRootContent()`.
+ * 使用 [AppRootUi] 注解，以便 codegen 处理器发出 `AppRootProvider` 接口和
+ * `AppRootContent` 扩展，让 activity 将多参数调用折叠为 `graph.AppRootContent()`。
  *
- * @param rootPresenter activity-scope root presenter from the dependency injection graph.
- * @param screenContents screen renderers contributed across every feature `ui` module.
- * @param sheetContents sheet renderers contributed across every sheet-owning feature `ui` module.
- * @param modifier layout modifier applied to the surface that hosts the home screen.
+ * @param rootPresenter 来自依赖注入图的 activity 作用域根 presenter。
+ * @param screenContents 跨每个功能 `ui` 模块贡献的屏幕渲染器。
+ * @param sheetContents 跨每个拥有 sheet 的功能 `ui` 模块贡献的 sheet 渲染器。
+ * @param modifier 应用于承载主屏幕的 surface 的布局 modifier。
  */
 @AppRootUi(presenter = RootPresenter::class, parentScope = ActivityScope::class)
 @Composable

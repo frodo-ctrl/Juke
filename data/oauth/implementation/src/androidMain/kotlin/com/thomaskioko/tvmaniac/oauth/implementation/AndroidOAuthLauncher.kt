@@ -64,7 +64,7 @@ public class AndroidOAuthLauncher(
     }
 
     override fun setCallback(provider: SyncProviderSource, callback: () -> Unit) {
-        // Not used on Android - results arrive through the ActivityResultLauncher.
+        // 在 Android 上不使用 - 结果通过 ActivityResultLauncher 到达。
     }
 
     private fun buildRequest(config: AuthClientConfig): AuthorizationRequest {
@@ -152,8 +152,8 @@ public class AndroidOAuthLauncher(
         private const val LOG_TAG = "OAuthLauncher"
         private const val TYPE_USER_CANCELED = 2
 
-        // Providers whose tokens never expire (e.g. Simkl) report no expiry; treat it as far-future so
-        // the refresh path is never taken. Revocation is handled by the 401 -> logout path instead.
+        // token 永不过期的提供者（例如 Simkl）报告无过期时间；将其视为遥远的未来，
+        // 以便不采取刷新路径。撤销由 401 -> logout 路径处理。
         private const val NEVER_EXPIRES_SECONDS = 4_102_444_800L
     }
 }

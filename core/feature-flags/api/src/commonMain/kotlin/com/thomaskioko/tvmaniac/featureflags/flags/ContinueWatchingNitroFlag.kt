@@ -3,9 +3,9 @@ package com.thomaskioko.tvmaniac.featureflags.flags
 import io.github.thomaskioko.codegen.annotations.FeatureFlag
 
 /**
- * Continue Watching Nitro flag. The codegen emits `ContinueWatchingNitroFlagQualifier` and
- * `ContinueWatchingNitroFlagBinding` from this anchor; consumers inject
- * `@ContinueWatchingNitroFlagQualifier FeatureFlag<Boolean>`.
+ * 继续观看 Nitro 开关。codegen 从此锚点发出 `ContinueWatchingNitroFlagQualifier` 和
+ * `ContinueWatchingNitroFlagBinding`；消费者注入
+ * `@ContinueWatchingNitroFlagQualifier FeatureFlag<Boolean>`。
  */
 @FeatureFlag(
     key = "enable_continue_watching_nitro",

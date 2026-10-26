@@ -80,9 +80,9 @@ public class ProgressContinueWatchingFetcher(
             when (response) {
                 is ApiResponse.Success -> {
                     val progress = response.body
-                    // Load-bearing filter. Catches reset shows (`reset_at` populated) and any case where
-                    // Trakt's per-show logic returns null next_episode. Removing it would persist rows
-                    // that never render in the watchlist.
+                    // 负载过滤器。捕获重置的节目（`reset_at` 已填充）以及任何
+                    // Trakt 逐节目逻辑返回 null next_episode 的情况。
+                    // 移除它会持久化永远不会在 watchlist 中渲染的行。
                     if (progress.nextEpisode != null) {
                         send(ProgressBatch.Entry(toEntry(showId, descriptors[showId], progress), traktId = showId))
                     }
@@ -155,18 +155,18 @@ internal data class ProgressDescriptor(
 )
 
 /**
- * Incremental sync event emitted by Continue Watching fetchers.
+ * Continue Watching 获取器发出的增量同步事件。
  *
- * Subscribers apply each variant to the local table independently, so the UI updates
- * progressively as entries arrive instead of waiting for a single atomic flip.
+ * 订阅者将每个变体独立应用到本地表，因此 UI 会随着条目到达而渐进更新，
+ * 而不是等待单次原子翻转。
  */
 internal sealed interface ProgressBatch {
-    /** Single resolved show entry, sent as soon as it is ready. [traktId] carries the Trakt id for stub tvshow insertion. */
+    /** 单个已解析的节目条目，准备就绪后立即发送。[traktId] 携带用于 stub tvshow 插入的 Trakt id。 */
     data class Entry(val entry: ContinueWatchingEntry, val traktId: Long? = null) : ProgressBatch
 
     /**
-     * Terminal event. [finalShowIds] is the authoritative tmdb-boundary id set for the synced
-     * watchlist; subscribers delete rows not in this set, then stamp freshness markers.
+     * 终止事件。[finalShowIds] 是同步的 watchlist 的权威 tmdb 边界 id 集；
+     * 订阅者删除不在此集中的行，然后标记新鲜度标记。
      */
     data class Complete(val finalShowIds: Set<Long>) : ProgressBatch
 }

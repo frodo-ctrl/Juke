@@ -8,17 +8,17 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 
 /**
- * Whether haptic feedback fires on supported interactions. Provided at the application root from the
- * persisted preference; defaults to `true`. Gate every haptic call site through
- * [rememberHapticFeedback] so flipping this off silences them all.
+ * 是否在支持的交互上触发触觉反馈。在应用根节点从持久化偏好提供；
+ * 默认为 `true`。通过 [rememberHapticFeedback] 门控每个触觉调用站点，
+ * 以便将其关闭时全部静默。
  */
 public val LocalHapticFeedbackEnabled: ProvidableCompositionLocal<Boolean> = staticCompositionLocalOf {
     true
 }
 
 /**
- * Returns a callback that performs a haptic pulse when [LocalHapticFeedbackEnabled] is on and is a
- * no-op otherwise. Call at interaction sites like watched toggles and long presses.
+ * 返回一个回调，当 [LocalHapticFeedbackEnabled] 开启时执行触觉脉冲，否则无操作。
+ * 在交互站点（如已观看切换和长按）调用。
  */
 @Composable
 public fun rememberHapticFeedback(): () -> Unit {

@@ -5,7 +5,7 @@ import androidx.compose.ui.tooling.preview.PreviewWrapperProvider
 import com.thomaskioko.tvmaniac.compose.theme.TvManiacTheme
 
 /**
- * A [PreviewWrapperProvider] that provides the [TvManiacTheme] for previews.
+ * 一个为预览提供 [TvManiacTheme] 的 [PreviewWrapperProvider]。
  */
 public class TvManiacPreviewWrapperProvider : PreviewWrapperProvider {
     @Composable

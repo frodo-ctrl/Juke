@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 /**
- * This helper implementation in from Cofetti Kmp App See
+ * 此辅助实现来自 Cofetti Kmp App，参见
  * https://github.com/joreilly/Confetti/blob/fb832c2131b2f3e5276a1a3a30666aa571e1e17e/shared/src/commonMain/kotlin/dev/johnoreilly/confetti/decompose/DecomposeUtils.kt#L27
  */
 public fun LifecycleOwner.coroutineScope(
@@ -41,9 +41,8 @@ public fun LifecycleOwner.coroutineScope(
 }
 
 /**
- * [CoroutineScope] that remembers the [Lifecycle] of the component it belongs to, letting
- * [asValue] pause collection while the component is stopped (inactive bottom-nav tab,
- * back-stack entry, backgrounded app).
+ * [CoroutineScope]，它记住其所属组件的 [Lifecycle]，让 [asValue] 在组件停止时
+ * 暂停收集（非活动底部导航标签页、返回栈条目、后台应用）。
  */
 internal class LifecycleAwareCoroutineScope(
     delegate: CoroutineScope,
@@ -51,20 +50,19 @@ internal class LifecycleAwareCoroutineScope(
 ) : CoroutineScope by delegate
 
 /**
- * Creates a Main [CoroutineScope] instance tied to the lifecycle of this [ComponentContext].
+ * 创建绑定到此 [ComponentContext] 生命周期的 Main [CoroutineScope] 实例。
  */
 public fun LifecycleOwner.componentCoroutineScope(): CoroutineScope =
     coroutineScope(Dispatchers.Main)
 
 /**
- * Converts this Kotlin [StateFlow] to a Decompose [Value].
- * Collects on [Dispatchers.Main.immediate] to ensure thread-safe [MutableValue] updates.
+ * 将此 Kotlin [StateFlow] 转换为 Decompose [Value]。
+ * 在 [Dispatchers.Main.immediate] 上收集以确保线程安全的 [MutableValue] 更新。
  *
- * When [scope] comes from [LifecycleOwner.coroutineScope], collection runs only while the
- * owning component is started. This keeps `SharingStarted.WhileSubscribed` state flows
- * unsubscribed for stopped components (inactive tabs are parked at CREATED by the navigation
- * layer), so their upstream database and network flows stay idle until the component is shown
- * again. A plain scope collects for its whole life.
+ * 当 [scope] 来自 [LifecycleOwner.coroutineScope] 时，收集仅在所属组件启动时运行。
+ * 这保持了 `SharingStarted.WhileSubscribed` 状态 flow 在停止的组件上未订阅
+ * （非活动标签页被导航层挂起在 CREATED），因此它们的上游数据库和网络 flow 在组件再次显示前保持空闲。
+ * 普通 scope 则在整个生命周期内收集。
  */
 public fun <T : Any> StateFlow<T>.asValue(scope: CoroutineScope): Value<T> {
     val mutableValue = MutableValue(value)
@@ -89,7 +87,7 @@ public fun <T : Any> StateFlow<T>.asValue(scope: CoroutineScope): Value<T> {
 }
 
 /**
- * Converts this Decompose [Value] to Kotlin [StateFlow].
+ * 将此 Decompose [Value] 转换为 Kotlin [StateFlow]。
  */
 public fun <T : Any> Value<T>.asStateFlow(coroutineScope: CoroutineScope): StateFlow<T> = asFlow()
     .stateIn(
@@ -99,7 +97,7 @@ public fun <T : Any> Value<T>.asStateFlow(coroutineScope: CoroutineScope): State
     )
 
 /**
- * Converts this Decompose [Value] to Kotlin [Flow].
+ * 将此 Decompose [Value] 转换为 Kotlin [Flow]。
  */
 public fun <T : Any> Value<T>.asFlow(): Flow<T> = callbackFlow {
     val cancellation = subscribe { value ->

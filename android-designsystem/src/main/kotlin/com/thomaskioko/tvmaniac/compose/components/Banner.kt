@@ -72,23 +72,23 @@ private fun BannerStyle.colors(): BannerColors = when (this) {
 }
 
 /**
- * Persistent, dismissible top-of-screen banner. Renders edge-to-edge with no corner radius
- * so it reads as part of the system chrome and stays visually distinct from
- * [TvManiacSnackBar], which is rounded and inset. Applies [statusBarsPadding] internally so
- * consumers do not re-add it, and animates in/out via [AnimatedVisibility].
+ * 持久可关闭的屏幕顶部横幅。边缘到边缘渲染，无圆角，
+ * 因此看起来像系统 chrome 的一部分，并在视觉上与圆角内凹的
+ * [TvManiacSnackBar] 保持区分。内部应用 [statusBarsPadding] 以便
+ * 消费者不需要重新添加，并通过 [AnimatedVisibility] 进行进入/退出动画。
  *
- * Layout stacks the message row (text, close) above an optional [action] row aligned to the
- * trailing edge. The `Error` variant resolves its palette from
- * [MaterialTheme.colorScheme.errorContainer]/[androidx.compose.material3.ColorScheme.onErrorContainer]
- * so it adapts to every active theme; other variants use a fixed palette.
+ * 布局将消息行（文本、关闭按钮）堆叠在可选的右对齐 [action] 行上方。
+ * `Error` 变体从 [MaterialTheme.colorScheme.errorContainer]/
+ * [androidx.compose.material3.ColorScheme.onErrorContainer] 解析其调色板，
+ * 因此适应每个活动主题；其他变体使用固定调色板。
  *
- * @param message Body copy shown to the user.
- * @param onDismiss Invoked when the close icon is tapped.
- * @param modifier Layout modifier applied to the outer animated container.
- * @param visible Drives the enter/exit animation. Hide via `false` to slide the banner back up.
- * @param style Visual variant. Drives background and content colors.
- * @param dismissContentDescription Accessibility label for the close icon.
- * @param action Optional trailing action slot rendered below the message, right-aligned.
+ * @param message 向用户显示的正文内容。
+ * @param onDismiss 点击关闭图标时调用。
+ * @param modifier 应用于外部动画容器的布局 modifier。
+ * @param visible 驱动进入/退出动画。通过 `false` 隐藏以向上滑出横幅。
+ * @param style 视觉变体。驱动背景和内容颜色。
+ * @param dismissContentDescription 关闭图标的无障碍标签。
+ * @param action 在消息下方渲染的可选尾部操作槽，右对齐。
  */
 @Composable
 public fun TvManiacBanner(

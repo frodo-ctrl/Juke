@@ -1,8 +1,8 @@
 package com.thomaskioko.tvmaniac.datastore.api
 
 /**
- * Poster width preset. [scale] multiplies the responsive base width and composes with the window
- * size class; [STANDARD] is the neutral 1.0 baseline.
+ * 海报宽度预设。[scale] 乘以响应式基础宽度并与窗口尺寸等级组合；
+ * [STANDARD] 是中性的 1.0 基线。
  */
 public enum class PosterWidth(public val scale: Float) {
     COMPACT(0.85f),

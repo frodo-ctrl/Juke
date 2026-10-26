@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juke · App 图标提案 / 白底黑字艺术字 J</title>
+<style>
+  /* ---------- seed tokens (all visuals derive from these) ---------- */
+  :root {
+    --seed-bg: #ffffff;
+    --seed-fg: #0a0a0a;
+    --seed-accent: #000000;
+    --seed-radius: 22%;
+    --seed-gap: 28px;
+    --seed-grid: 1;
+
+    --paper: var(--seed-bg);
+    --ink: var(--seed-fg);
+    --accent: var(--seed-accent);
+
+    --hairline: color-mix(in srgb, var(--ink) 13%, var(--paper));
+    --hairline-strong: color-mix(in srgb, var(--ink) 34%, var(--paper));
+    --muted: color-mix(in srgb, var(--ink) 56%, var(--paper));
+    --faint: color-mix(in srgb, var(--ink) 40%, var(--paper));
+    --surface: color-mix(in srgb, var(--ink) 3.5%, var(--paper));
+    --surface-2: color-mix(in srgb, var(--ink) 6%, var(--paper));
+    --glass: color-mix(in srgb, var(--ink) 7%, transparent);
+
+    --font-sans: "figmaSans Fallback", "SF Pro Display", -apple-system, "Segoe UI Variable Display", "Segoe UI", system-ui, "PingFang SC", "Microsoft YaHei", helvetica, sans-serif;
+    --font-mono: "figmaMono Fallback", "SF Mono", "Cascadia Mono", "Roboto Mono", menlo, consolas, monospace;
+    --font-serif: "Iowan Old Style", "Palatino Linotype", "Songti SC", Georgia, serif;
+
+    --maxw: 1240px;
+  }
+
+  body.invert {
+    --seed-bg: #0b0b0b;
+    --seed-fg: #ffffff;
+    --accent: var(--seed-fg);
+  }
+  body.invert .tile.dark { --tile-paper: var(--seed-fg); --tile-ink: var(--seed-bg); }
+  body.invert .tile.light { --tile-paper: var(--seed-fg); --tile-ink: var(--seed-bg); }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "kern" 1;
+    letter-spacing: -0.16px;
+    line-height: 1.45;
+    font-weight: 400;
+  }
+
+  ::selection { background: var(--ink); color: var(--paper); }
+
+  button:focus-visible, a:focus-visible {
+    outline: 2px dashed var(--ink);
+    outline-offset: 3px;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-weight: 400;
+  }
+
+  /* ---------- chrome ---------- */
+  .bar {
+    position: sticky; top: 0; z-index: 40;
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 32px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .bar-mark { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+  .bar-mark svg { width: 26px; height: 26px; display: block; }
+  .bar-title { font-size: 14px; letter-spacing: -0.1px; }
+  .bar-title b { font-weight: 540; }
+  .bar-title span { color: var(--muted); }
+
+  .pill {
+    font-family: var(--font-mono);
+    text-transform: uppercase; letter-spacing: 0.07em;
+    font-size: 11px;
+    padding: 8px 16px 9px;
+    border-radius: 50px;
+    border: 1px solid var(--hairline-strong);
+    background: transparent; color: var(--ink);
+    cursor: pointer;
+    transition: background .16s ease, border-color .16s ease;
+  }
+  .pill:hover { background: var(--glass); }
+  .pill[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- hero ---------- */
+  header.hero { padding: 84px 0 44px; }
+  .eyebrow { font-size: 11px; color: var(--muted); display: block; margin-bottom: 26px; }
+  h1 {
+    margin: 0 0 26px;
+    font-size: clamp(40px, 6.4vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 400;
+    max-width: 17ch;
+  }
+  h1 em { font-style: italic; font-family: var(--font-serif); font-weight: 400; }
+  .lede {
+    font-size: 20px; line-height: 1.5; letter-spacing: -0.26px;
+    font-weight: 340; color: color-mix(in srgb, var(--ink) 78%, var(--paper));
+    max-width: 60ch; margin: 0 0 34px;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted);
+    border: 1px solid var(--hairline); border-radius: 50px; padding: 6px 12px 7px;
+  }
+
+  /* ---------- context strip ---------- */
+  .context {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(238px, 1fr));
+    gap: var(--seed-gap);
+    padding: 40px 0 8px;
+    border-top: 1px solid var(--hairline);
+    margin-top: 46px;
+  }
+  .context > div { min-width: 0; }
+  .context h3 { margin: 0 0 9px; font-size: 11px; font-weight: 400; color: var(--faint); }
+  .context p { margin: 0; font-size: 15px; line-height: 1.55; letter-spacing: -0.14px; font-weight: 330; color: var(--muted); }
+  .context p b { color: var(--ink); font-weight: 540; }
+
+  /* ---------- section head ---------- */
+  .sec-head {
+    display: flex; align-items: baseline; gap: 18px;
+    margin: 96px 0 30px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .sec-head h2 { margin: 0; font-size: 27px; letter-spacing: -0.028em; font-weight: 450; }
+  .sec-head .n { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-left: auto; white-space: nowrap; }
+
+  /* ---------- proposal card ---------- */
+  .prop { margin-bottom: 88px; scroll-margin-top: 90px; }
+  .prop-head { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .prop-code {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em;
+    border: 1px solid var(--ink); border-radius: 3px; padding: 3px 8px 4px;
+  }
+  .prop-name { margin: 0; font-size: 24px; letter-spacing: -0.026em; font-weight: 540; }
+  .prop-tag { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .prop-best { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--paper); background: var(--ink); border-radius: 50px; padding: 5px 12px 6px; }
+
+  .prop-body {
+    display: grid;
+    grid-template-columns: minmax(240px, 320px) minmax(280px, 1fr);
+    gap: var(--seed-gap);
+    align-items: start;
+  }
+
+  .stage { display: flex; flex-direction: column; gap: 14px; }
+
+  .tile {
+    --tile-paper: var(--paper);
+    --tile-ink: var(--ink);
+    background: var(--tile-paper);
+    border: 1px solid var(--hairline);
+    border-radius: var(--seed-radius);
+    position: relative;
+    display: grid; place-items: center;
+    overflow: hidden;
+  }
+  .tile.dark { --tile-paper: var(--ink); --tile-ink: var(--paper); border-color: transparent; }
+  .tile svg { display: block; width: 100%; height: 100%; }
+  .tile.hero-tile { aspect-ratio: 1 / 1; }
+  .tile.hero-tile svg { width: 78%; height: 78%; }
+
+  .keyline {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0; transition: opacity .18s ease; pointer-events: none;
+  }
+  body.grid .keyline { opacity: var(--seed-grid); }
+
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .duo .tile { aspect-ratio: 1/1; }
+  .duo .tile svg { width: 62%; height: 62%; }
+  .duo-cap { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); margin-top: -6px; }
+
+  .sizes {
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    background: var(--surface);
+    padding: 18px 18px 14px;
+  }
+  .sizes > span { display: block; font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint); margin-bottom: 14px; }
+  .size-row { display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+  .size-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .size-item .tile { border: 1px solid var(--hairline); }
+  .size-item .tile svg { width: 100%; height: 100%; }
+  .size-item .lbl { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em; color: var(--faint); }
+  .s16 { width: 16px; height: 16px; } .s24 { width: 24px; height: 24px; }
+  .s32 { width: 32px; height: 32px; } .s48 { width: 48px; height: 48px; }
+
+  .launch {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .launch .scr {
+    border-radius: 12px; padding: 12px 10px 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--hairline);
+  }
+  /* 模拟"杂乱壁纸"：用斜向硬边条纹代替柔和光斑，避免通用 AI 玻璃球质感 */
+  .launch .scr.photo {
+    background:
+      repeating-linear-gradient(
+        -45deg,
+        color-mix(in srgb, var(--ink) 78%, var(--paper)) 0 9px,
+        color-mix(in srgb, var(--ink) 52%, var(--paper)) 9px 18px,
+        color-mix(in srgb, var(--ink) 88%, var(--paper)) 18px 30px
+      );
+  }
+  .launch .scr.photo .tile { border-color: transparent; }
+  .launch .ic { width: 46px; height: 46px; }
+  .launch .ic .tile { width: 100%; height: 100%; border-radius: 24%; border-color: transparent; box-shadow: 0 1px 4px color-mix(in srgb, var(--ink) 22%, transparent); }
+  .launch .cap { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-top: 7px; text-align: center; }
+
+  .notes dl { margin: 0; display: grid; grid-template-columns: 96px 1fr; gap: 0 16px; }
+  .notes dt {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--faint); padding: 13px 0 13px; border-top: 1px solid var(--hairline);
+  }
+  .notes dd {
+    margin: 0; padding: 12px 0; border-top: 1px solid var(--hairline);
+    font-size: 15.5px; line-height: 1.55; letter-spacing: -0.16px; font-weight: 330;
+    color: color-mix(in srgb, var(--ink) 82%, var(--paper));
+  }
+  .notes dd b { font-weight: 540; color: var(--ink); }
+  .notes dd code {
+    font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.02em;
+    background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 4px; padding: 1px 5px 2px;
+  }
+  .notes .spec { color: var(--muted); font-size: 14px; }
+  .notes .risk b { color: var(--ink); }
+
+  .prop-concept {
+    font-size: 17px; line-height: 1.5; letter-spacing: -0.2px; font-weight: 330;
+    color: color-mix(in srgb, var(--ink) 80%, var(--paper));
+    margin: 0 0 22px; max-width: 62ch;
+  }
+  .prop-concept strong { font-weight: 540; color: var(--ink); }
+
+  /* ---------- recommendation ---------- */
+  .rec {
+    display: grid; grid-template-columns: minmax(280px, 1fr) minmax(300px, 1.15fr);
+    gap: calc(var(--seed-gap) * 1.4);
+    align-items: start;
+    border: 1px solid var(--ink); border-radius: 14px;
+    padding: calc(var(--seed-gap) * 1.1);
+  }
+  .rec-left .tile { aspect-ratio: 1/1; max-width: 260px; }
+  .rec-left .tile svg { width: 78%; height: 78%; }
+  .rec h3 { margin: 0 0 6px; font-size: 30px; letter-spacing: -0.03em; font-weight: 450; }
+  .rec .sub { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+  .rec ol { margin: 0 0 26px; padding-left: 22px; }
+  .rec li { font-size: 16px; line-height: 1.55; letter-spacing: -0.18px; font-weight: 330; margin-bottom: 11px; color: color-mix(in srgb, var(--ink) 84%, var(--paper)); }
+  .rec li b { font-weight: 540; color: var(--ink); }
+  .rec .alt { border-top: 1px solid var(--hairline); padding-top: 18px; font-size: 15px; line-height: 1.55; font-weight: 330; color: var(--muted); }
+  .rec .alt b { color: var(--ink); font-weight: 540; }
+
+  .optical { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .optical figure { margin: 0; }
+  .optical .frame { border: 1px solid var(--hairline); border-radius: 10px; background: var(--surface); padding: 18px; display: grid; place-items: center; }
+  .optical .frame .tile { border-color: transparent; }
+  .optical figcaption { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--faint); margin-top: 10px; line-height: 1.5; }
+  .optical .o-big { width: 120px; height: 120px; }
+  .optical .o-small { display: flex; gap: 12px; align-items: flex-end; }
+
+  /* ---------- spec ---------- */
+  .spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: var(--seed-gap); }
+  .spec-grid > div { border-top: 1px solid var(--hairline); padding-top: 15px; }
+  .spec-grid h4 { margin: 0 0 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--faint); font-weight: 400; }
+  .spec-grid p { margin: 0; font-size: 15px; line-height: 1.55; letter-spacing: -0.14px; font-weight: 330; color: var(--muted); }
+  .spec-grid p b { color: var(--ink); font-weight: 540; }
+
+  .reject { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--seed-gap); margin-top: 8px; }
+  .reject div { border: 1px solid var(--hairline); border-radius: 10px; padding: 18px 18px 16px; background: var(--surface); }
+  .reject h5 { margin: 0 0 7px; font-size: 15px; font-weight: 540; letter-spacing: -0.14px; }
+  .reject h5 span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--faint); display: block; margin-bottom: 4px; font-weight: 400; }
+  .reject p { margin: 0; font-size: 14.5px; line-height: 1.5; letter-spacing: -0.12px; font-weight: 330; color: var(--muted); }
+
+  footer {
+    margin-top: 96px; border-top: 1px solid var(--ink);
+    padding: 30px 0 84px;
+    display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); gap: var(--seed-gap);
+    align-items: start;
+  }
+  footer p { margin: 0; font-size: 14.5px; line-height: 1.6; letter-spacing: -0.12px; font-weight: 330; color: var(--muted); }
+  footer p b { color: var(--ink); font-weight: 540; }
+  footer .next { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--faint); margin-bottom: 12px; }
+
+  @media (max-width: 900px) {
+    .wrap { padding: 0 20px; }
+    .bar { padding: 12px 20px; }
+    .prop-body { grid-template-columns: 1fr; }
+    .rec { grid-template-columns: 1fr; }
+    footer { grid-template-columns: 1fr; }
+    .notes dl { grid-template-columns: 1fr; }
+    .notes dt { padding-bottom: 0; border-top: none; margin-top: 14px; }
+    header.hero { padding-top: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ glyph source (inline SVG, hand-drawn geometry) ============ -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute" focusable="false">
+  <defs>
+
+    <!-- A · 衬线刻痕 J -->
+    <symbol id="gA" viewBox="0 0 120 120">
+      <rect class="ink" x="48" y="24" width="40" height="7"/>
+      <rect class="ink" x="65" y="24" width="10" height="42"/>
+      <path class="inkS" d="M75 66 A18 18 0 0 1 39 66" stroke-width="20"/>
+      <rect class="cut" x="44" y="81" width="4" height="6"/>
+      <rect class="cut" x="55" y="81" width="4" height="6"/>
+      <rect class="cut" x="66" y="81" width="4" height="6"/>
+    </symbol>
+
+    <!-- B · 点唱盘 J -->
+    <symbol id="gB" viewBox="0 0 120 120">
+      <rect class="ink" x="50" y="22" width="30" height="6"/>
+      <rect class="ink" x="58" y="22" width="10" height="48"/>
+      <circle class="ink" cx="48" cy="76" r="26"/>
+      <circle class="cut" cx="48" cy="76" r="20"/>
+      <circle class="ink" cx="48" cy="76" r="13"/>
+      <path class="cutS" d="M48 76 L66 58" stroke-width="4"/>
+      <circle class="cut" cx="48" cy="76" r="3.2"/>
+    </symbol>
+
+    <!-- C · 进度刻度 J -->
+    <symbol id="gC" viewBox="0 0 120 120">
+      <rect class="ink" x="72" y="24" width="16" height="14" rx="3"/>
+      <rect class="ink" x="72" y="42" width="16" height="14" rx="3"/>
+      <rect class="ink" x="72" y="60" width="16" height="8"/>
+      <path class="inkS" d="M80 68 A18 18 0 0 1 44 68" stroke-width="16"/>
+    </symbol>
+
+    <!-- D · 一笔闭环 J -->
+    <symbol id="gD" viewBox="0 0 120 120">
+      <path class="inkS" d="M88 27 H62 V66 A17 17 0 1 1 29 60.2" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+
+    <!-- D-mini · 小尺寸光学修正版 -->
+    <symbol id="gDm" viewBox="0 0 120 120">
+      <rect class="ink" x="63" y="24" width="16" height="42"/>
+      <path class="inkS" d="M71 66 A18 18 0 0 1 35 66" stroke-width="16"/>
+    </symbol>
+
+    <!-- E · 负形双关 J（无黑底板 · 纯白底黑字） -->
+    <symbol id="gE" viewBox="0 0 120 120">
+      <g transform="translate(2 3)">
+        <rect class="ink" x="56" y="24" width="32" height="8"/>
+        <path class="inkS" d="M74 28 V62 A20 20 0 0 1 34 62 V52" stroke-width="12" stroke-linejoin="round"/>
+        <path class="acc" d="M47 54 L63 62 L47 70 Z"/>
+      </g>
+    </symbol>
+
+    <!-- keyline overlay -->
+    <symbol id="key" viewBox="0 0 120 120">
+      <g fill="none" stroke="currentColor" stroke-width="0.5">
+        <rect x="20" y="20" width="80" height="80"/>
+        <rect x="14" y="14" width="92" height="92" stroke-dasharray="2 2"/>
+        <circle cx="60" cy="60" r="40"/>
+        <circle cx="60" cy="60" r="28" stroke-dasharray="2 2"/>
+        <path d="M60 12 V108 M12 60 H108"/>
+        <path d="M20 20 L100 100 M100 20 L20 100" stroke-dasharray="1.5 2.5"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<style>
+  .ink { fill: var(--tile-ink); }
+  .cut { fill: var(--tile-paper); }
+  .inkS { fill: none; stroke: var(--tile-ink); stroke-linecap: butt; }
+  .cutS { fill: none; stroke: var(--tile-paper); stroke-linecap: butt; }
+  .acc { fill: var(--accent); }
+  /* 反白面上强调色回落到墨色，避免纯黑强调在深色底上消失 */
+  .tile.dark .acc { fill: var(--tile-ink); }
+  .tile { color: color-mix(in srgb, var(--ink) 55%, var(--paper)); }
+</style>
+
+<!-- ============ chrome ============ -->
+<div class="bar" data-component="proposal-toolbar">
+  <div class="bar-mark">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg>
+    <div class="bar-title"><b>Juke</b> <span>· 剧刻 App 图标提案</span></div>
+  </div>
+  <button class="pill" id="tGrid" aria-pressed="false">构造网格</button>
+  <button class="pill" id="tInv" aria-pressed="false">反白预览</button>
+</div>
+
+<div class="wrap">
+<main>
+
+  <!-- ============ hero ============ -->
+  <header class="hero" data-component="proposal-header">
+    <span class="eyebrow mono">Icon proposal / 05 directions / black on white</span>
+    <h1>白底黑字的 <em>J</em>，能长出几种符号</h1>
+    <p class="lede">五版方向，全部以可读的艺术字 J 为基础，只用纯黑与纯白。每一版都押在一个不同的产品语义上：胶片、点唱机、追剧进度、一笔连续、负形双关。重点不是谁更花哨，而是<strong style="font-weight:540">缩到 16px 还认不认得出 J</strong>。</p>
+    <div class="chips">
+      <span class="chip">5 directions</span>
+      <span class="chip">16 / 24 / 32 / 48 px 实测</span>
+      <span class="chip">正负形互倒校验</span>
+      <span class="chip">纯黑白 · 无渐变</span>
+      <span class="chip">矢量几何 120×120</span>
+    </div>
+
+    <div class="context" data-component="project-context">
+      <div>
+        <h3 class="mono">产品事实</h3>
+        <p>Juke（<b>剧刻</b>）是剧集追踪与推荐 App，标语「好剧 从此刻开始」。核心动作是<b>记录看到哪一集</b>，不是播放器本身。</p>
+      </div>
+      <div>
+        <h3 class="mono">现有符号缺口</h3>
+        <p>启动页用的是斜体衬线「Juke」，<b>J 至今只是字母</b>，没有独立符号。现网 launcher 图标是一块 slate 蓝灰场记板加两侧金黄胶片点。</p>
+      </div>
+      <div>
+        <h3 class="mono">可沿用的基因</h3>
+        <p>Work Sans 全字重、衬线斜体的品牌腔调、<b>胶片齿孔</b>与唱盘母题、金黄 #FEBD0A 与蓝灰 #324E5B 的既有资产。</p>
+      </div>
+      <div>
+        <h3 class="mono">本轮约束</h3>
+        <p>白底黑字，不加渐变与外发光；J 必须读得出来；<b>不做抽象到认不出字母</b>的方向。彩色点缀仅在 E 版作为可选试点出镜。</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ proposals ============ -->
+  <section data-component="proposal-list">
+    <div class="sec-head">
+      <h2>五版方向</h2>
+      <span class="n mono">A–E · 可单独迭代任意一版</span>
+    </div>
+
+    <!-- A -->
+    <article class="prop" data-component="proposal-a">
+      <div class="prop-head">
+        <span class="prop-code mono">A</span>
+        <h3 class="prop-name">衬线刻痕</h3>
+        <span class="prop-tag mono">editorial notch</span>
+      </div>
+      <p class="prop-concept">把启动页那套 <strong>衬线斜体的品牌腔调</strong> 直接搬进图标：细竖笔、粗底钩，高笔画对比做出「 editorial / 杂志感」。创新点在钩部——厚笔画里挖出三个<b>胶片齿孔</b>，让一个衬线 J 同时是一段胶片。</p>
+      <div class="prop-body">
+        <div class="stage">
+          <div class="tile hero-tile">
+            <svg viewBox="0 0 120 120" role="img" aria-label="方案 A 衬线刻痕 J 图标"><use href="#gA"/></svg>
+            <svg class="keyline" viewBox="0 0 120 120" aria-hidden="true"><use href="#key"/></svg>
+          </div>
+          <div class="duo">
+            <div class="tile light"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gA"/></svg></div>
+            <div class="tile dark"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gA"/></svg></div>
+          </div>
+          <div class="duo-cap"><span>正形 · 白底黑字</span><span>负形 · 反白校验</span></div>
+        </div>
+        <div class="notes">
+          <div class="sizes" data-component="size-test">
+            <span>Actual size test · 白底</span>
+            <div class="size-row">
+              <div class="size-item"><div class="tile s48"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gA"/></svg></div><span class="lbl mono">48</span></div>
+              <div class="size-item"><div class="tile s32"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gA"/></svg></div><span class="lbl mono">32</span></div>
+              <div class="size-item"><div class="tile s24"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gA"/></svg></div><span class="lbl mono">24</span></div>
+              <div class="size-item"><div class="tile s16"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gA"/></svg></div><span class="lbl mono">16</span></div>
+            </div>
+            <span style="margin-top:18px">Actual size test · 反白</span>
+            <div class="size-row">
+              <div class="size-item"><div class="tile dark s48"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gA"/></svg></div><span class="lbl mono">48</span></div>
+              <div class="size-item"><div class="tile dark s32"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gA"/></svg></div><span class="lbl mono">32</span></div>
+              <div class="size-item"><div class="tile dark s24"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gA"/></svg></div><span class="lbl mono">24</span></div>
+              <div class="size-item"><div class="tile dark s16"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gA"/></svg></div><span class="lbl mono">16</span></div>
+            </div>
+          </div>
+          <dl>
+            <dt>创新点</dt><dd>高对比衬线笔画（细 <code>10u</code> / 粗 <code>20u</code>）＋ 厚钩内负形齿孔，把「字母」和「胶片」压在同一轮廓里。</dd>
+            <dt>品牌契合</dt><dd><b>最像剧刻现有的气质</b>。和启动页的斜体衬线 Juke 能直接同框，宣发、海报、片头都能用。</dd>
+            <dt class="risk">风险</dt><dd class="risk"><b>16px 会糊。</b>细竖笔只有 8.3% 高，小尺寸下齿孔直接并成一条灰带；必须配一个去掉齿孔、加粗竖笔的简化版。</dd>
+            <dt>构造</dt><dd class="spec">竖笔 x65–75 · 底钩 R18 / stroke 20 · 齿孔 3 × (4×6) @ y81 · 外轮廓占 24–94</dd>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <!-- B -->
+    <article class="prop" data-component="proposal-b">
+      <div class="prop-head">
+        <span class="prop-code mono">B</span>
+        <h3 class="prop-name">点唱盘</h3>
+        <span class="prop-tag mono">jukebox dial</span>
+      </div>
+      <p class="prop-concept">回到词源：<strong>juke = jukebox</strong>。竖笔是唱臂，底钩换成一张同心圆唱片，圆心一刀斜切就是落下的唱针。J 的识别靠「上竖下圆」的结构关系，而不靠笔画细节。</p>
+      <div class="prop-body">
+        <div class="stage">
+          <div class="tile hero-tile">
+            <svg viewBox="0 0 120 120" role="img" aria-label="方案 B 点唱盘 J 图标"><use href="#gB"/></svg>
+            <svg class="keyline" viewBox="0 0 120 120" aria-hidden="true"><use href="#key"/></svg>
+          </div>
+          <div class="duo">
+            <div class="tile light"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gB"/></svg></div>
+            <div class="tile dark"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gB"/></svg></div>
+          </div>
+          <div class="duo-cap"><span>正形 · 白底黑字</span><span>负形 · 反白校验</span></div>
+        </div>
+        <div class="notes">
+          <div class="sizes">
+            <span>Actual size test · 白底</span>
+            <div class="size-row">
+              <div class="size-item"><div class="tile s48"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gB"/></svg></div><span class="lbl mono">48</span></div>
+              <div class="size-item"><div class="tile s32"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gB"/></svg></div><span class="lbl mono">32</span></div>
+              <div class="size-item"><div class="tile s24"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gB"/></svg></div><span class="lbl mono">24</span></div>
+              <div class="size-item"><div class="tile s16"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gB"/></svg></div><span class="lbl mono">16</span></div>
+            </div>
+            <span style="margin-top:18px">Actual size test · 反白</span>
+            <div class="size-row">
+              <div class="size-item"><div class="tile dark s48"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gB"/></svg></div><span class="lbl mono">48</span></div>
+              <div class="size-item"><div class="tile dark s32"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gB"/></svg></div><span class="lbl mono">32</span></div>
+              <div class="size-item"><div class="tile dark s24"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gB"/></svg></div><span class="lbl mono">24</span></div>
+              <div class="size-item"><div class="tile dark s16"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gB"/></svg></div><span class="lbl mono">16</span></div>
+            </div>
+          </div>
+          <dl>
+            <dt>创新点</dt><dd>把唱片做成<b>可拆解的图形库</b>：外环、沟槽、轴心三层，之后加载态可以直接让它转起来（旋转即播放）。</dd>
+            <dt>品牌契合</dt><dd>最有「故事」的一版，解释成本最低——别人问 Juke 什么意思，图标自己答了。</dd>
+            <dt class="risk">风险</dt><dd class="risk">24px 以下同心圆沟槽会并成实心饼，<b>J 感变弱、更像通用音乐图标</b>；且和「播放器」品类撞脸概率高。</dd>
+            <dt>构造</dt><dd class="spec">唱片 R26 / 沟槽 R20 / 内盘 R13 / 轴心 R3.2 · 唱臂 4u 斜切 45° · 竖笔 10u</dd>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <!-- C -->
+    <article class="prop" data-component="proposal-c">
+      <div class="prop-head">
+        <span class="prop-code mono">C</span>
+        <h3 class="prop-name">进度刻度</h3>
+        <span class="prop-tag mono">progress j</span>
+        <span class="prop-best mono">产品语义最强</span>
+      </div>
+      <p class="prop-concept">这一版不押字体、押行为：<strong>竖笔被切成三段</strong>，就是「看到第几集」的进度格；底钩保持实心厚弧，负责在任何尺寸下把 J 认出来。它同时是字母、也是状态条。</p>
+      <div class="prop-body">
+        <div class="stage">
+          <div class="tile hero-tile">
+            <svg viewBox="0 0 120 120" role="img" aria-label="方案 C 进度刻度 J 图标"><use href="#gC"/></svg>
+            <svg class="keyline" viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg>
+          </div>
+          <div class="duo">
+            <div class="tile light"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div>
+            <div class="tile dark"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div>
+          </div>
+          <div class="duo-cap"><span>正形 · 白底黑字</span><span>负形 · 反白校验</span></div>
+        </div>
+        <div class="notes">
+          <div class="sizes">
+            <span>Actual size test · 白底</span>
+            <div class="size-row">
+              <div class="size-item"><div class="tile s48"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div><span class="lbl mono">48</span></div>
+              <div class="size-item"><div class="tile s32"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div><span class="lbl mono">32</span></div>
+              <div class="size-item"><div class="tile s24"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div><span class="lbl mono">24</span></div>
+              <div class="size-item"><div class="tile s16"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div><span class="lbl mono">16</span></div>
+            </div>
+            <span style="margin-top:18px">Actual size test · 反白</span>
+            <div class="size-row">
+              <div class="size-item"><div class="tile dark s48"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div><span class="lbl mono">48</span></div>
+              <div class="size-item"><div class="tile dark s32"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div><span class="lbl mono">32</span></div>
+              <div class="size-item"><div class="tile dark s24"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div><span class="lbl mono">24</span></div>
+              <div class="size-item"><div class="tile dark s16"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div><span class="lbl mono">16</span></div>
+            </div>
+          </div>
+          <dl>
+            <dt>创新点</dt><dd>段数可以<b>真的变成进度</b>：三段的缺口令它成为唯一一版「能随产品状态变化」的图标（追完 → 合并为实心 J）。</dd>
+            <dt>品牌契合</dt><dd>直接对应「好剧 从此刻开始」和 Trakt / Simkl 式的记录行为，<b>差异化最高，撞脸概率最低</b>。</dd>
+            <dt class="risk">风险</dt><dd class="risk">16px 时刻度缺口只有约 <b>0.9px</b>，会被抗锯齿吃掉、看起来像印歪了。缺口必须做到 4u 以上并只留 <b>1 段</b>。</dd>
+            <dt>构造</dt><dd class="spec">笔画 16u（占高 13.3%）· 段高 14/14/8 · 缺口 4u · 底钩 R18 / stroke 16 · 外轮廓占 24–92</dd>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <!-- D -->
+    <article class="prop" data-component="proposal-d">
+      <div class="prop-head">
+        <span class="prop-code mono">D</span>
+        <h3 class="prop-name">一笔闭环</h3>
+        <span class="prop-tag mono">single stroke</span>
+        <span class="prop-best mono">小尺寸最稳</span>
+      </div>
+      <p class="prop-concept">一笔不断写成的 J：顶部横杠折进竖笔，竖笔<b>相切地</b>滑进底钩，钩尾再向上回挑一个 200° 的大弧。所有转折共享同一个半径，圆头收笔，几何上几乎无可挑剔。</p>
+      <div class="prop-body">
+        <div class="stage">
+          <div class="tile hero-tile">
+            <svg viewBox="0 0 120 120" role="img" aria-label="方案 D 一笔闭环 J 图标"><use href="#gD"/></svg>
+            <svg class="keyline" viewBox="0 0 120 120" aria-hidden="true"><use href="#key"/></svg>
+          </div>
+          <div class="duo">
+            <div class="tile light"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div>
+            <div class="tile dark"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div>
+          </div>
+          <div class="duo-cap"><span>正形 · 白底黑字</span><span>负形 · 反白校验</span></div>
+        </div>
+        <div class="notes">
+          <div class="sizes">
+            <span>Actual size test · 白底</span>
+            <div class="size-row">
+              <div class="size-item"><div class="tile s48"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div><span class="lbl mono">48</span></div>
+              <div class="size-item"><div class="tile s32"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div><span class="lbl mono">32</span></div>
+              <div class="size-item"><div class="tile s24"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div><span class="lbl mono">24</span></div>
+              <div class="size-item"><div class="tile s16"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div><span class="lbl mono">16</span></div>
+            </div>
+            <span style="margin-top:18px">Actual size test · 反白</span>
+            <div class="size-row">
+              <div class="size-item"><div class="tile dark s48"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div><span class="lbl mono">48</span></div>
+              <div class="size-item"><div class="tile dark s32"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div><span class="lbl mono">32</span></div>
+              <div class="size-item"><div class="tile dark s24"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div><span class="lbl mono">24</span></div>
+              <div class="size-item"><div class="tile dark s16"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div><span class="lbl mono">16</span></div>
+            </div>
+          </div>
+          <dl>
+            <dt>创新点</dt><dd>钩尾<b>上挑回勾</b>是记忆点：普通 J 到 180° 就停，它多走 20°，形成「回弹」的动势，也暗示下一集。</dd>
+            <dt>品牌契合</dt><dd>与 Work Sans 的几何中性最搭，做 UI 内联图标、单色 monochrome 层、印刷都零成本。</dd>
+            <dt class="risk">风险</dt><dd class="risk">性格偏冷静、偏工具，<b>情绪温度低于 A / B</b>；回勾在 16px 会和主钩并成一团（见下方光学修正版）。</dd>
+            <dt>构造</dt><dd class="spec">等线 14u · 横杠–竖笔–圆弧全部相切 · 底钩 R17 扫过 200° · 圆头 linecap · 外轮廓占 19–95</dd>
+          </dl>
+        </div>
+      </div>
+    </article>
+
+    <!-- E -->
+    <article class="prop" data-component="proposal-e">
+      <div class="prop-head">
+        <span class="prop-code mono">E</span>
+        <h3 class="prop-name">负形双关</h3>
+        <span class="prop-tag mono">negative space</span>
+        <span class="prop-best mono">v2 · 已去黑底板</span>
+      </div>
+      <p class="prop-concept">把「挖」的方向掉个头：不再铺黑底板，而是让 J 的底钩<strong>往上回挑、自己围出一间白腔</strong>，腔里放一枚实心黑三角。一眼是 J，再看是「J 里在播放」——三层黑白关系全部留在白底上，不再需要任何底色块。</p>
+      <div class="prop-body">
+        <div class="stage">
+          <div class="tile hero-tile">
+            <svg viewBox="0 0 120 120" role="img" aria-label="方案 E 负形双关 J 图标"><use href="#gE"/></svg>
+            <svg class="keyline" viewBox="0 0 120 120" aria-hidden="true"><use href="#key"/></svg>
+          </div>
+          <div class="duo">
+            <div class="tile light"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gE"/></svg></div>
+            <div class="tile dark"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gE"/></svg></div>
+          </div>
+          <div class="duo-cap"><span>正形 · 白底黑字</span><span>负形 · 反白校验</span></div>
+        </div>
+        <div class="notes">
+          <div class="sizes">
+            <span>Actual size test · 白底</span>
+            <div class="size-row">
+              <div class="size-item"><div class="tile s48"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gE"/></svg></div><span class="lbl mono">48</span></div>
+              <div class="size-item"><div class="tile s32"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gE"/></svg></div><span class="lbl mono">32</span></div>
+              <div class="size-item"><div class="tile s24"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gE"/></svg></div><span class="lbl mono">24</span></div>
+              <div class="size-item"><div class="tile s16"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gE"/></svg></div><span class="lbl mono">16</span></div>
+            </div>
+            <span style="margin-top:18px">Actual size test · 反白</span>
+            <div class="size-row">
+              <div class="size-item"><div class="tile dark s48"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gE"/></svg></div><span class="lbl mono">48</span></div>
+              <div class="size-item"><div class="tile dark s32"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gE"/></svg></div><span class="lbl mono">32</span></div>
+              <div class="size-item"><div class="tile dark s24"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gE"/></svg></div><span class="lbl mono">24</span></div>
+              <div class="size-item"><div class="tile dark s16"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gE"/></svg></div><span class="lbl mono">16</span></div>
+            </div>
+          </div>
+          <dl>
+            <dt>创新点</dt><dd>负形全部由 J 自己生成：底钩回挑围出一间白腔，白腔里再放黑三角，<b>三层黑白、零底色块</b>。它是五版里唯一「图形内部自带留白结构」的，放大到海报、缩小到水印都不需要背景配合。</dd>
+            <dt>品牌契合</dt><dd>那间白腔天然是一个容器：之后可以往里换内容——正在追的集数、播放状态、甚至一帧剧照，<b>图标本身就能变成状态载体</b>。</dd>
+            <dt class="risk">风险</dt><dd class="risk">回挑让 J 有被读成 U 的可能，目前靠顶部横杠拉回来；三角在 16px 只剩约 2px，<b>双关会消失</b>，退化成一只普通 J（字母识别本身不受影响）。</dd>
+            <dt>构造</dt><dd class="spec">等线 12u · 底钩 R20 扫过 180° ＋ 左侧回挑至 y52 · 白腔 R14 · 三角 16×16 锁在腔心 · 整组下移 3u 做光学居中，外轮廓占 30–90 × 27–91</dd>
+          </dl>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ recommendation ============ -->
+  <section data-component="recommendation">
+    <div class="sec-head">
+      <h2>我的推荐</h2>
+      <span class="n mono">主选 C · 备选 D · 需要配套光学尺寸</span>
+    </div>
+    <div class="rec">
+      <div class="rec-left">
+        <div class="tile">
+          <svg viewBox="0 0 120 120" role="img" aria-label="推荐方案 C 进度刻度 J"><use href="#gC"/></svg>
+          <svg class="keyline" viewBox="0 0 120 120" aria-hidden="true"><use href="#key"/></svg>
+        </div>
+        <div class="launch" data-component="context-preview">
+          <div class="scr">
+            <div class="ic"><div class="tile"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div></div>
+            <div class="cap mono">浅色桌面</div>
+          </div>
+          <div class="scr photo">
+            <div class="ic"><div class="tile"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gC"/></svg></div></div>
+            <div class="cap mono">壁纸 / 深色</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3>C · 进度刻度 J</h3>
+        <div class="sub mono">recommend for launcher · 512 / adaptive foreground</div>
+        <ol>
+          <li><b>语义独占。</b>A、B、D 别人也在做；「J 的竖笔＝已看进度」只有追剧产品能用，它把图标和核心功能绑在一起，而不是装饰。</li>
+          <li><b>结构最抗缩放。</b>实心厚底钩 R18 / 16u 承担识别度，刻度只作用在竖笔上——即使刻度被吃掉，剩下仍然是一个干净的 J。</li>
+          <li><b>有成长空间。</b>后续可以做「本周追完 → 刻度合并」的状态变体，也能和现有金黄圆点资产无缝衔接。</li>
+        </ol>
+        <div class="optical" data-component="optical-sizing" style="margin:22px 0 24px">
+          <figure>
+            <div class="frame"><div class="tile o-big"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gD"/></svg></div></div>
+            <figcaption>完整版 · ≥40px<br>保留横杠与回勾细节</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><div class="o-small">
+              <div class="tile" style="width:48px;height:48px"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gDm"/></svg></div>
+              <div class="tile" style="width:24px;height:24px"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gDm"/></svg></div>
+              <div class="tile" style="width:16px;height:16px"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#gDm"/></svg></div>
+            </div></div>
+            <figcaption>小尺寸修正版 · ≤32px<br>去横杠、笔画加粗到 16u</figcaption>
+          </figure>
+        </div>
+        <div class="alt">
+          <b>如果你更想要温度而不是差异化</b>：选 D（一笔闭环）作为系统级图标语言，它的中性气质最适合内嵌到 UI 里当品牌小图标；把 C 只用在 launcher 一处。<br><br>
+          <b>E 已按你的要求去掉黑底板</b>，现在是纯白底＋黑 J＋黑三角，完全合规。但它的记忆点集中在三角上，16px 时双关会消失，所以更适合当 <b>App 内的品牌位、启动图与水印</b>，而不是主 launcher 图标。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ spec ============ -->
+  <section data-component="design-spec">
+    <div class="sec-head">
+      <h2>落地规范</h2>
+      <span class="n mono">若选中的方案要交给开发，跟着这组数字走</span>
+    </div>
+    <div class="spec-grid">
+      <div>
+        <h4 class="mono">画布与安全区</h4>
+        <p>矢量按 <b>120×120u</b> 绘制，图形锁在 <b>20–100u</b>（66.7%）内。Android adaptive icon 前景层是 108dp、可视安全区 66dp——照这个比例出图，套上任何系统蒙版都不会被切。</p>
+      </div>
+      <div>
+        <h4 class="mono">笔画基准</h4>
+        <p>主笔画 <b>13–16% 字高</b>（本板 C/D 用 16u、A 粗笔 20u）。低于 8% 在 16px 下会断墨；细笔画只允许出现在 ≥64px 的场合。</p>
+      </div>
+      <div>
+        <h4 class="mono">圆角策略</h4>
+        <p>图标容器不画死圆角，交给系统蒙版；图形自身的圆角统一 <b>R17–20</b>，与 App 内 <b>16/24dp</b> 的 Shape 阶梯对得上，不会出现「图标一套语言、界面另一套」。</p>
+      </div>
+      <div>
+        <h4 class="mono">响应式图标</h4>
+        <p>正式方案建议出 <b>两个光学尺寸</b>：完整版（≥40px）与修正版（≤32px）。这是 iOS/Android 系统图标通行的做法，不是妥协。</p>
+      </div>
+      <div>
+        <h4 class="mono">Monochrome 层</h4>
+        <p>D 与 C 可直接复用为 <code>ic_launcher_monochrome</code>，无需重画。A 的齿孔与 E 的三角属于第二层信息，单色主题下建议各自简化为单层。</p>
+      </div>
+      <div>
+        <h4 class="mono">背景层待办</h4>
+        <p>现网背景层仍是 Android Studio 默认绿 <b>#3DDC84</b>。白底黑字的方向要求背景层同步改为纯白，否则深色主题下图标四周会出现一圈绿边。</p>
+      </div>
+    </div>
+
+    <div class="sec-head" style="margin-top:74px">
+      <h2>不做的尝试</h2>
+      <span class="n mono">已排除 · 附原因</span>
+    </div>
+    <div class="reject">
+      <div>
+        <h5><span class="mono">rejected 01</span>花体装饰 J</h5>
+        <p>纯手写连笔的 J 在大图很好看，但笔画粗细不可控、16px 下必糊，且无法矢量化成稳定源文件。只在 A 版里借了它「对比」的一个切面。</p>
+      </div>
+      <div>
+        <h5><span class="mono">rejected 02</span>渐变 / 3D 立体 J</h5>
+        <p>与「白底黑字」直接冲突；立体高光在 16px 会退化成脏灰，也不利于单色主题与印刷墨稿。</p>
+      </div>
+      <div>
+        <h5><span class="mono">rejected 03</span>中文「剧」为主图形</h5>
+        <p>笔画密度太高，launcher 尺寸下糊成方块。更合适的用法是把「剧刻」留在启动页与字标里，图标层只承担字母。</p>
+      </div>
+      <div>
+        <h5><span class="mono">rejected 04</span>给现图标换配色</h5>
+        <p>把场记板改成黑白是成本最低的方案，但它解决不了真正的问题：Juke 至今没有一个符号。本轮按「造符号」处理。</p>
+      </div>
+    </div>
+  </section>
+
+  <footer data-component="handoff-note">
+    <div>
+      <div class="next mono">下一步 · 你只需要说编号</div>
+      <p>① <b>选定一版</b>，我出 1024 主标 ＋ adaptive 前景/背景/单色三层 ＋ 网格规范图；<br>② <b>混合两版</b>（例如 C 的刻度 ＋ B 的唱盘底）；<br>③ <b>换情绪</b>：同一结构做更手写、更硬核或更幼态的变体。</p>
+    </div>
+    <div>
+      <p style="margin-bottom:14px"><b>本板未触碰你的项目。</b>Juke 目录下的 Kotlin 代码与图标资源全程只读，这一页设计稿只存在于 Canvas 工作区。真要替换 launcher 图标时，改动点会在 app 模块的 mipmap 与 <code style="font-family:var(--font-mono);font-size:12px">ic_launcher_foreground.xml</code>，由你手动决定要不要落地。</p>
+      <p>本页所有图标为内联 SVG 手绘几何，可右键直接复制 SVG 或截图取用；黑白纯度高，可直接作印刷墨稿。</p>
+    </div>
+  </footer>
+</main>
+</div>
+
+<script>
+  (function () {
+    var grid = document.getElementById('tGrid');
+    var inv = document.getElementById('tInv');
+    function bind(btn, cls) {
+      btn.addEventListener('click', function () {
+        var on = document.body.classList.toggle(cls);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+    bind(grid, 'grid');
+    bind(inv, 'invert');
+  })();
+</script>
+</body>
+</html>

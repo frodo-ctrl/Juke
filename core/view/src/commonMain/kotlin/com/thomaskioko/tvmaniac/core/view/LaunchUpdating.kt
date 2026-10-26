@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
- * Flags [id] in [updatingIds] while [statusFlow] runs, driving a per-item progress indicator.
- * Removes [id] once collection finishes, on success or failure, and routes errors through
- * [collectStatus]. [counter] additionally tracks the operation as a global loading signal.
- * Ignores re-dispatch while [id] is already updating.
+ * 在 [statusFlow] 运行期间在 [updatingIds] 中标记 [id]，驱动逐项进度指示器。
+ * 收集完成后（无论成功或失败）移除 [id]，并通过 [collectStatus] 路由错误。
+ * [counter] 额外将该操作作为全局加载信号进行跟踪。
+ * 当 [id] 已经在更新中时忽略重新分发。
  */
 public fun CoroutineScope.launchUpdating(
     id: Long,

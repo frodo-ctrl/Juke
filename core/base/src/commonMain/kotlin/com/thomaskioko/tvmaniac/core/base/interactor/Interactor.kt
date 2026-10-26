@@ -56,10 +56,10 @@ public abstract class ResultInteractor<in P, R> {
 }
 
 public abstract class SubjectInteractor<P : Any, T> {
-    // Ideally this would be buffer = 0, since we use flatMapLatest below, BUT invoke is not
-    // suspending. This means that we can't suspend while flatMapLatest cancels any
-    // existing flows. The buffer of 1 means that we can use tryEmit() and buffer the value
-    // instead, resulting in mostly the same result.
+    // 理想情况下这应该是 buffer = 0，因为我们在下面使用 flatMapLatest，但 invoke 不是
+    // 挂起的。这意味着我们不能在 flatMapLatest 取消任何现有 flow 时挂起。
+    // 缓冲区为 1 意味着我们可以使用 tryEmit() 并缓冲该值，
+    // 结果几乎相同。
     private val paramState = MutableSharedFlow<P>(
         replay = 1,
         extraBufferCapacity = 1,

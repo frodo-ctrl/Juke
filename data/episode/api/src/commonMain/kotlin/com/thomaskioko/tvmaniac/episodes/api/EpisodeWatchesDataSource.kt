@@ -9,8 +9,8 @@ public interface EpisodeWatchesDataSource : SyncProvider {
     public suspend fun getAllWatchedShows(page: Int = 1, limit: Int = 100): List<WatchedShowBatch>
 
     /**
-     * Runtime, release year and genres for the user's watched shows. Providers that already return
-     * these from [getAllWatchedShows] keep the default and cost no extra request.
+     * 用户已观看节目的时长、发行年份和类型。已从 [getAllWatchedShows] 返回这些内容的
+     * 提供者保持默认实现，不产生额外请求。
      */
     public suspend fun getWatchedShowMetadata(page: Int = 1, limit: Int = 100): List<WatchedShowMetadata> = emptyList()
 

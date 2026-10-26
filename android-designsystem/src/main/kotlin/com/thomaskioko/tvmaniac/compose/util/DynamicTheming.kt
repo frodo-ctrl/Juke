@@ -39,8 +39,7 @@ public fun rememberDominantColorState(
 }
 
 /**
- * A composable which allows dynamic theming of the [androidx.compose.material.Colors.primary] color
- * from an image.
+ * 允许从图像动态设置 [androidx.compose.material.Colors.primary] 颜色的可组合项。
  */
 @Composable
 public fun DynamicThemePrimaryColorsFromImage(
@@ -66,15 +65,13 @@ public fun DynamicThemePrimaryColorsFromImage(
 }
 
 /**
- * A class which stores and caches the result of any calculated dominant colors from images.
+ * 存储和缓存从图像计算的任何主色结果的类。
  *
  * @param context Android context
- * @param defaultColor The default color, which will be used if [calculateDominantColor] fails to
- *   calculate a dominant color
- * @param defaultOnColor The default foreground 'on color' for [defaultColor].
- * @param cacheSize The size of the [LruCache] used to store recent results. Pass `0` to disable the
- *   cache.
- * @param isColorValid A lambda which allows filtering of the calculated image colors.
+ * @param defaultColor 默认颜色，当 [calculateDominantColor] 无法计算主色时使用
+ * @param defaultOnColor [defaultColor] 的默认前景色 'on color'。
+ * @param cacheSize 用于存储最近结果的 [LruCache] 大小。传入 `0` 禁用缓存。
+ * @param isColorValid 允许过滤计算出的图像颜色的 lambda。
  */
 @Stable
 public class DominantColorState(
@@ -107,7 +104,7 @@ public class DominantColorState(
             return cached
         }
 
-        // Otherwise we calculate the swatches in the image, and return the first valid color
+        // 否则我们计算图像中的色板，并返回第一个有效颜色
         return calculateSwatchesInImage(context, url)
             .sortedByDescending { swatch -> swatch.population }
             .firstOrNull { swatch -> isColorValid(Color(swatch.rgb)) }
@@ -120,7 +117,7 @@ public class DominantColorState(
             ?.also { result -> cache?.put(url, result) }
     }
 
-    /** Reset the color values to [defaultColor]. */
+    /** 将颜色值重置为 [defaultColor]。 */
     public fun reset() {
         color = defaultColor
         onColor = defaultColor
@@ -130,7 +127,7 @@ public class DominantColorState(
 @Immutable
 private data class DominantColors(val color: Color, val onColor: Color)
 
-/** Fetches the given [imageUrl] with Coil, then uses [Palette] to calculate the dominant color. */
+/** 使用 Coil 获取给定 [imageUrl]，然后使用 [Palette] 计算主色。 */
 private suspend fun calculateSwatchesInImage(
     context: Context,
     imageUrl: String,

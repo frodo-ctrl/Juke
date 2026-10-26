@@ -1,23 +1,21 @@
 package com.thomaskioko.tvmaniac.data.watchproviders.implementation
 
 /**
- * Collapse TMDB watch-provider variants under a single canonical brand entry.
+ * 将 TMDB 观看提供者变体合并为单一规范品牌条目。
  *
- * TMDB lists the same brand many ways: a canonical service ("MGM Plus", "Amazon
- * Prime Video"), channel variants ("MGM+ Amazon Channel", "MGM Plus Roku Premium
- * Channel"), and tier variants ("Amazon Prime Video with Ads"). Across all of these,
- * the canonical brand is the shortest word-sequence prefix — every variant extends
- * that prefix with one or more extra words.
+ * TMDB 以多种方式列出同一品牌：规范服务（"MGM Plus"、"Amazon Prime Video"）、
+ * 频道变体（"MGM+ Amazon Channel"、"MGM Plus Roku Premium Channel"）和层级变体
+ * （"Amazon Prime Video with Ads"）。在所有这些中，规范品牌是最短的词序列前缀——
+ * 每个变体都用一个或多个额外的词扩展该前缀。
  *
- * For each entry, if any OTHER entry's normalized words form a strict prefix of this
- * one's words, this entry is a variant of that shorter brand and is dropped. The
- * shorter entry is kept. When two entries normalize to the same words (e.g. "MGM+"
- * and "MGM Plus", since `+` normalizes to ` Plus`), the first occurrence wins to
- * preserve input order.
+ * 对于每个条目，如果任何其他条目的规范化词形成此条目的严格前缀，
+ * 则此条目是该较短品牌的变体并被丢弃。保留较短的条目。当两个条目规范化为相同的词
+ * （例如 "MGM+" 和 "MGM Plus"，因为 `+` 规范化为 ` Plus`）时，第一个出现的保留
+ * 以保持输入顺序。
  *
- * Word-prefix matching is dynamic: no hardcoded suffix list, so new TMDB variants
- * (e.g. "Hulu with Live TV", "Paramount+ with Showtime") collapse automatically as
- * long as the canonical brand is present in the same payload.
+ * 词前缀匹配是动态的：没有硬编码的后缀列表，因此新的 TMDB 变体
+ * （例如 "Hulu with Live TV"、"Paramount+ with Showtime"）只要同一 payload 中存在规范品牌，
+ * 就会自动合并。
  */
 internal inline fun <T> List<T>.dedupedByBrand(name: (T) -> String?): List<T> {
     if (isEmpty()) return this

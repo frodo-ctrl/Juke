@@ -21,12 +21,12 @@ import androidx.compose.ui.tooling.preview.PreviewWrapper
 private const val COUNT_UP_DURATION_MILLIS = 280
 
 /**
- * [Text] that counts up from `0` to [count] once when [count] first arrives, then animates
- * between values on subsequent changes. Animation is skipped (final value shown immediately)
- * when motion is reduced or in inspection mode, keeping previews and screenshot tests deterministic.
+ * [Text]，在 [count] 首次到达时从 `0` 计数到 [count] 一次，然后在后续更改时在值之间动画。
+ * 当动画减少或在检查模式下时，动画被跳过（立即显示最终值），
+ * 保持预览和截图测试的确定性。
  *
- * @param count target value to display.
- * @param format renders the displayed integer; defaults to a grouped decimal (e.g. `1,250`).
+ * @param count 要显示的目标值。
+ * @param format 渲染显示的整数；默认为分组十进制（例如 `1,250`）。
  */
 @Composable
 public fun AnimatedCountText(

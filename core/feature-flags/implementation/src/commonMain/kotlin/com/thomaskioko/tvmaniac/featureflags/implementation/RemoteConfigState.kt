@@ -12,14 +12,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 
 /**
- * Shared in-memory cache that the Firebase realtime listener writes into and that
- * [com.thomaskioko.tvmaniac.featureflags.FeatureFlagsRemoteConfig] reads from. Keyed by Remote
- * Config key (matching the underlying Firebase configuration). Source defaults to
- * [FeatureFlagSource.Firebase]; the `DebugRemoteConfig` decorator overlays
- * [FeatureFlagSource.Local] when an override is active.
+ * Firebase 实时监听器写入和 [com.thomaskioko.tvmaniac.featureflags.FeatureFlagsRemoteConfig]
+ * 读取的共享内存缓存。以 Remote Config key 为键（匹配底层 Firebase 配置）。
+ * 源默认为 [FeatureFlagSource.Firebase]；`DebugRemoteConfig` 装饰器在覆盖激活时
+ * 叠加 [FeatureFlagSource.Local]。
  *
- * Constructed once at application scope; both `AndroidRemoteConfig` and `IosRemoteConfig` share
- * the same instance per platform graph.
+ * 在应用作用域构造一次；`AndroidRemoteConfig` 和 `IosRemoteConfig` 在每个平台图中
+ * 共享同一实例。
  */
 @SingleIn(AppScope::class)
 @Inject

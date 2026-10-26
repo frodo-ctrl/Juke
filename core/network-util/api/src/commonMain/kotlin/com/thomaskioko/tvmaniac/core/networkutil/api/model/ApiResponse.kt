@@ -52,9 +52,8 @@ public fun <T> ApiResponse<T>.getOrNull(): T? = when (this) {
 }
 
 /**
- * Transforms [ApiResponse.Success] body with [transform], leaving every non-success variant
- * unchanged. Lets adapters map a remote model onto a provider-neutral one without re-handling the
- * error and unauthenticated cases.
+ * 使用 [transform] 转换 [ApiResponse.Success] 的 body，所有非成功变体保持不变。
+ * 让适配器将远程模型映射到提供者无关的模型，而无需重新处理错误和未认证情况。
  */
 public inline fun <T, R> ApiResponse<T>.map(transform: (T) -> R): ApiResponse<R> = when (this) {
     is ApiResponse.Success -> ApiResponse.Success(transform(body))

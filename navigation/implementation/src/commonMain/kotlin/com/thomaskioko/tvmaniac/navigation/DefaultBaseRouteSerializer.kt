@@ -12,20 +12,19 @@ import kotlinx.serialization.modules.polymorphic
 import kotlin.reflect.KClass
 
 /**
- * Composes every [NavRouteBinding] and [NavRootBinding] contributed at [ActivityScope] into one
- * polymorphic [KSerializer] of [BaseRoute].
+ * 将每个在 [ActivityScope] 贡献的 [NavRouteBinding] 和 [NavRootBinding] 组合成一个
+ * [BaseRoute] 的多态 [KSerializer]。
  *
- * Decompose's `childStack(serializer = ...)` uses the resulting serializer when each tab's back
- * stack mixes a [NavRoot] at the bottom with [NavRoute] entries on top. The constructor validates
- * three invariants: at least one binding is present, every contributed [NavRoot] also has a
- * matching [NavRootBinding], and no route or root class contributes more than one binding.
- * Validation runs once at construction so misconfigured graphs fail at startup rather than at the
- * first navigation event.
+ * 当每个标签页的返回栈在底部混合 [NavRoot]、在顶部混合 [NavRoute] 条目时，
+ * Decompose 的 `childStack(serializer = ...)` 使用生成的序列化器。
+ * 构造函数验证三个不变量：至少存在一个绑定，每个贡献的 [NavRoot] 也有匹配的
+ * [NavRootBinding]，并且没有路由或根类贡献多个绑定。
+ * 验证在构造时运行一次，以便配置错误的图在启动时失败，而不是在第一个导航事件时失败。
  *
- * @param routeBindings polymorphic serializer entries for each [NavRoute] subclass.
- * @param rootBindings polymorphic serializer entries for each [NavRoot] subclass.
- * @param navRoots tab anchors registered through the navigation multibinding set; used to verify
- *   each has a matching [NavRootBinding].
+ * @param routeBindings 每个 [NavRoute] 子类的多态序列化器条目。
+ * @param rootBindings 每个 [NavRoot] 子类的多态序列化器条目。
+ * @param navRoots 通过导航多绑定 set 注册的标签页锚点；用于验证每个都有匹配的
+ *   [NavRootBinding]。
  */
 @OptIn(ExperimentalStateKeeperApi::class, ExperimentalSerializationApi::class)
 @SingleIn(ActivityScope::class)

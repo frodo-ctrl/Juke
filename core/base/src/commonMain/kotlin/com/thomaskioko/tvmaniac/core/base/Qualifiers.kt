@@ -60,10 +60,10 @@ public annotation class AppPreferencesDataStore
 public annotation class FeatureFlagLocalsDataStore
 
 /**
- * Preferences that must not follow the user to a new device.
+ * 不应跟随用户到新设备的偏好设置。
  *
- * Kept in a file the Android backup rules exclude, so a restored device does not inherit a record of
- * something that never happened on it.
+ * 保存在 Android 备份规则排除的文件中，因此恢复的设备不会继承
+ * 其上从未发生过的事情的记录。
  */
 @Qualifier
 @Retention(BINARY)

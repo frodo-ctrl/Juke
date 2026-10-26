@@ -4,16 +4,16 @@ import kotlinx.serialization.KSerializer
 import kotlin.reflect.KClass
 
 /**
- * Pairs a [NavRoot] subclass with its generated [KSerializer].
+ * 将 [NavRoot] 子类与其生成的 [KSerializer] 配对。
  *
- * Each tab's `:nav` module contributes one [NavRootBinding] for each [NavRoot] through
- * `@Provides @IntoSet` in a `@ContributesTo(ActivityScope::class) interface`. Contributions are
- * collected as a `Set<NavRootBinding<*>>` and folded into the polymorphic [NavRootSerializer]
- * used by Decompose's top-level `childStack` so active-tab order survives process death.
+ * 每个标签页的 `:nav` 模块通过在 `@ContributesTo(ActivityScope::class) interface`
+ * 中使用 `@Provides @IntoSet` 为每个 [NavRoot] 贡献一个 [NavRootBinding]。
+ * 贡献被收集为 `Set<NavRootBinding<*>>` 并折叠到多态 [NavRootSerializer] 中，
+ * 供 Decompose 的顶层 `childStack` 使用，以便活动标签页顺序在进程死亡后仍然存活。
  *
- * @param T concrete [NavRoot] subclass paired with its serializer.
- * @property kClass concrete `KClass` of the registered subclass.
- * @property serializer generated `KSerializer` for the registered subclass.
+ * @param T 与其序列化器配对的具体 [NavRoot] 子类。
+ * @property kClass 已注册子类的具体 `KClass`。
+ * @property serializer 已注册子类的生成 `KSerializer`。
  */
 public data class NavRootBinding<T : NavRoot>(
     public val kClass: KClass<T>,

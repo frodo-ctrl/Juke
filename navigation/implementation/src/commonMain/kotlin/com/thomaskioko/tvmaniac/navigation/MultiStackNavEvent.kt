@@ -3,37 +3,35 @@ package com.thomaskioko.tvmaniac.navigation
 import kotlin.reflect.KClass
 
 /**
- * Event language for the [DefaultNavigator]'s multi-stack navigation source.
+ * [DefaultNavigator] 多栈导航源的事件语言。
  *
- * Public [Navigator] methods translate one call into one [MultiStackNavEvent] and post it to a
- * `SimpleNavigation<MultiStackNavEvent>`. Decompose then runs [multiStackNavTransformer] against
- * the current [MultiStackNavState] to compute the next state. Keeping the event language sealed
- * lets the transformer match exhaustively on each variant and rejects any new event without an
- * accompanying transformer branch.
+ * 公共 [Navigator] 方法将一次调用转换为一个 [MultiStackNavEvent] 并发布到
+ * `SimpleNavigation<MultiStackNavEvent>`。然后 Decompose 针对当前 [MultiStackNavState]
+ * 运行 [multiStackNavTransformer] 以计算下一个状态。保持事件语言为 sealed
+ * 允许转换器穷举匹配每个变体，并拒绝任何没有伴随转换器分支的新事件。
  */
 internal sealed interface MultiStackNavEvent {
     /**
-     * Pushes [route] onto the active tab's stack. Ignored when [route] already equals the stack's
-     * top entry so a rapid double-tap cannot enqueue a duplicate configuration, which Decompose
-     * rejects.
+     * 将 [route] 推送到活动标签页的栈上。当 [route] 已等于栈的顶部条目时忽略，
+     * 这样快速双击不会排入重复的配置（Decompose 会拒绝）。
      */
     data class Push(val route: NavRoute) : MultiStackNavEvent
 
-    /** Brings any existing instance of [route]'s class to the top, or pushes [route] if absent. */
+    /** 将 [route] 类的任何现有实例带到顶部，或如果不存在则推送 [route]。 */
     data class BringToFront(val route: NavRoute) : MultiStackNavEvent
 
-    /** Pushes [route] to the top, removing only an entry that equals [route] exactly. */
+    /** 将 [route] 推送到顶部，仅移除与 [route] 完全相等的条目。 */
     data class PushToFront(val route: NavRoute) : MultiStackNavEvent
 
     /**
-     * Pops entries from the top of the active stack. With the default [toIndex] of `-1`, pops one
-     * entry. With a non-negative [toIndex], pops until the entry at that index is on top.
+     * 从活动栈顶部弹出条目。默认 [toIndex] 为 `-1` 时弹出一个条目。
+     * 非负 [toIndex] 时弹出直到该索引处的条目位于顶部。
      */
     data class Pop(val toIndex: Int = -1) : MultiStackNavEvent
 
     /**
-     * Pops entries from the top of the active stack until the most recent entry of type
-     * [routeClass] is on top. If [inclusive] is `true`, that entry is also popped.
+     * 从活动栈顶部弹出条目，直到类型为 [routeClass] 的最近条目位于顶部。
+     * 如果 [inclusive] 为 `true`，该条目也会被弹出。
      */
     data class PopUntilType(
         val routeClass: KClass<out NavRoute>,
@@ -41,11 +39,10 @@ internal sealed interface MultiStackNavEvent {
     ) : MultiStackNavEvent
 
     /**
-     * Switches the active tab to [root]. If [resetStack] is `true`, the target tab's stack is
-     * cleared to its root entry.
+     * 将活动标签页切换为 [root]。如果 [resetStack] 为 `true`，目标标签页的栈被清除到其根条目。
      */
     data class SwitchTab(val root: NavRoot, val resetStack: Boolean) : MultiStackNavEvent
 
-    /** Resets every tab's stack to its root entry and activates [root]. */
+    /** 将每个标签页的栈重置为其根条目并激活 [root]。 */
     data class ReplaceAll(val root: NavRoot) : MultiStackNavEvent
 }

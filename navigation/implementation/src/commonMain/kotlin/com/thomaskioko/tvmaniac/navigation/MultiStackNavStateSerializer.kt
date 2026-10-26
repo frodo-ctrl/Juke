@@ -13,16 +13,15 @@ import kotlinx.serialization.encoding.decodeStructure
 import kotlinx.serialization.encoding.encodeStructure
 
 /**
- * Serializes [MultiStackNavState] using the polymorphic [BaseRoute] and [NavRoot] serializers
- * contributed through the navigation multibinding sets.
+ * 使用通过导航多绑定 set 贡献的多态 [BaseRoute] 和 [NavRoot] 序列化器
+ * 序列化 [MultiStackNavState]。
  *
- * Decompose calls [serialize] when the activity is being torn down and [deserialize] when state
- * is restored. The active root and the back stack for each tab are encoded as two fields; entry
- * order within a tab is preserved by [ListSerializer] and tab order by [MapSerializer].
+ * Decompose 在 activity 被销毁时调用 [serialize]，在恢复状态时调用 [deserialize]。
+ * 活动根节点和每个标签页的返回栈被编码为两个字段；标签页内的条目顺序由
+ * [ListSerializer] 保留，标签页顺序由 [MapSerializer] 保留。
  *
- * @param baseRouteSerializer aggregated route and root serializer used for individual stack
- *   entries.
- * @param navRootSerializer serializer for the active tab anchor and tab keys.
+ * @param baseRouteSerializer 用于单个栈条目的聚合路由和根序列化器。
+ * @param navRootSerializer 用于活动标签页锚点和标签页键的序列化器。
  */
 internal class MultiStackNavStateSerializer(
     baseRouteSerializer: KSerializer<BaseRoute>,

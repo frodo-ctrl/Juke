@@ -303,10 +303,10 @@ public class DefaultEpisodeRepository(
     }
 
     /**
-     * Push pending watched-episodes changes via the sync repository on a background scope. On
-     * failure, publish the appropriate [SyncError] variant for subscribed presenters and rethrow
-     * so [AppScopeLauncher]'s catch logs the cause. The rethrow is intentional: the launcher's
-     * existing swallow-and-log keeps the background scope alive.
+     * 在后台作用域上通过 sync repository 推送待处理的已观看剧集更改。
+     * 失败时，为订阅的 presenter 发布适当的 [SyncError] 变体并重新抛出，
+     * 以便 [AppScopeLauncher] 的 catch 记录原因。重新抛出是故意的：
+     * launcher 现有的吞掉并记录机制保持后台作用域存活。
      */
     private fun launchSyncReporting(errorFor: (Throwable) -> SyncError) {
         appScopeLauncher.launch(TAG) {

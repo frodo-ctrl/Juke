@@ -13,11 +13,11 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import com.thomaskioko.tvmaniac.compose.util.LocalHapticFeedbackEnabled
 
 /**
- * Clickable [Row] that owns the haptic pulse for its long-press affordance, so call sites pass plain
- * action lambdas instead of wiring haptics themselves. Plain taps stay silent (rows usually
- * navigate); [onLongClick] fires a gated pulse before running.
+ * 可点击的 [Row]，拥有其长按功能的触觉脉冲，因此调用站点传递普通的操作 lambda
+ * 而不是自己连接触觉。普通点击保持静音（行通常导航）；
+ * [onLongClick] 在运行前触发门控脉冲。
  *
- * [hapticEnabled] gates the pulse and defaults to the ambient [LocalHapticFeedbackEnabled].
+ * [hapticEnabled] 门控脉冲，默认为环境 [LocalHapticFeedbackEnabled]。
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

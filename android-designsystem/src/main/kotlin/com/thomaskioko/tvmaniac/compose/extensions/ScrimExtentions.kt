@@ -20,15 +20,13 @@ import com.thomaskioko.tvmaniac.compose.theme.TvManiacSpacing
 import kotlin.math.pow
 
 /**
- * Draws a vertical gradient scrim in the foreground.
+ * 在前景中绘制垂直渐变遮罩。
  *
- * @param color The color of the gradient scrim.
- * @param startYPercentage The start y value, in percentage of the layout's height (0f to 1f)
- * @param endYPercentage The end y value, in percentage of the layout's height (0f to 1f)
- * @param decay The exponential decay to apply to the gradient. Defaults to `1.0f` which is a linear
- *   gradient.
- * @param numStops The number of color stops to draw in the gradient. Higher numbers result in the
- *   higher visual quality at the cost of draw performance. Defaults to `16`.
+ * @param color 渐变遮罩的颜色。
+ * @param startYPercentage 起始 y 值，以布局高度的百分比表示（0f 到 1f）
+ * @param endYPercentage 结束 y 值，以布局高度的百分比表示（0f 到 1f）
+ * @param decay 应用于渐变的指数衰减。默认为 `1.0f`，即线性渐变。
+ * @param numStops 渐变中要绘制的颜色停止点数量。数字越大，视觉质量越高，但会以绘制性能为代价。默认为 `16`。
  */
 @SuppressLint("ComposeModifierComposed")
 public fun Modifier.verticalGradientScrim(
@@ -40,8 +38,7 @@ public fun Modifier.verticalGradientScrim(
 ): Modifier = composed {
     val colors = remember(color, numStops) {
         if (decay != 1f) {
-            // If we have a non-linear decay, we need to create the color gradient steps
-            // manually
+            // 如果有非线性衰减，我们需要手动创建颜色渐变步骤
             val baseAlpha = color.alpha
             List(numStops) { i ->
                 val x = i * 1f / (numStops - 1)
@@ -49,7 +46,7 @@ public fun Modifier.verticalGradientScrim(
                 color.copy(alpha = baseAlpha * opacity)
             }
         } else {
-            // If we have a linear decay, we just create a simple list of start + end colors
+            // 如果有线性衰减，我们只创建一个简单的起始 + 结束颜色列表
             listOf(color.copy(alpha = 0f), color)
         }
     }

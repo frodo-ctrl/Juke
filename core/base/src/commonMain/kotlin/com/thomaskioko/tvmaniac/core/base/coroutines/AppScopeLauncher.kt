@@ -4,20 +4,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 
 /**
- * Launches work that must outlive the caller's coroutine scope.
+ * 启动必须超出调用方协程作用域的工作。
  *
- * Use this for follow-up sync work triggered by a user action (writing through to the
- * network, refreshing caches) that should still complete if the user navigates away
- * before the launched block finishes. The block runs on a session-scoped supervisor,
- * so cancelling the caller does not cancel the launched job.
+ * 用于由用户操作触发的后续同步工作（写入网络、刷新缓存），
+ * 如果用户在启动的块完成之前导航离开，这些工作仍应完成。
+ * 该块在会话作用域的 supervisor 上运行，因此取消调用方不会取消已启动的作业。
  *
- * Session-scoped, not OS-scheduled. Logout and account switch cancel any in-flight work
- * (see [SyncCoroutineScope]); the scope otherwise dies with the process. For work that must
- * survive process death, use the OS-managed scheduler in `core/tasks` instead.
+ * 会话作用域，而非操作系统调度。登出和账户切换会取消任何进行中的工作
+ * （参见 [SyncCoroutineScope]）；否则该作用域随进程消亡。对于必须在进程死亡后存活的工作，
+ * 请改用 `core/tasks` 中的操作系统管理的调度器。
  *
- * The launcher catches any failure inside the block and logs it under the supplied
- * tag. CancellationException is rethrown (never logged), so structured cancellation
- * during process shutdown still works.
+ * launcher 捕获块内的任何失败，并在提供的 tag 下记录。
+ * CancellationException 会被重新抛出（从不记录），因此进程关闭期间的结构化取消仍然有效。
  */
 public interface AppScopeLauncher {
 

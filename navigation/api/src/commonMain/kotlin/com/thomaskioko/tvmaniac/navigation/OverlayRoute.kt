@@ -1,12 +1,10 @@
 package com.thomaskioko.tvmaniac.navigation
 
 /**
- * Marks a [NavRoute] subtype that activates as an overlay (a modal sheet) rather than a
- * full-screen stack entry.
+ * 标记作为覆盖层（模态 sheet）而非全屏栈条目激活的 [NavRoute] 子类型。
  *
- * [Navigator.navigateTo] inspects the route's type at runtime. A route that implements
- * [OverlayRoute] dispatches to the overlay slot; every other route dispatches to the active
- * root's back stack. The marker keeps overlay routing inside [Navigator] without splitting the
- * public method into two.
+ * [Navigator.navigateTo] 在运行时检查路由的类型。实现 [OverlayRoute] 的路由
+ * 分发到覆盖层插槽；其他所有路由分发到活动根节点的返回栈。
+ * 该标记将覆盖层路由保持在 [Navigator] 内部，而不将公共方法拆分为两个。
  */
 public interface OverlayRoute : NavRoute

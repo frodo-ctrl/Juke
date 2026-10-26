@@ -19,11 +19,11 @@ import org.mobilenativefoundation.store.store5.impl.extensions.fresh
 import org.mobilenativefoundation.store.store5.impl.extensions.get
 
 /**
- * Creates a [StoreBuilder] wired with the given [fetcher] and [sourceOfTruth].
+ * 创建一个连接了给定 [fetcher] 和 [sourceOfTruth] 的 [StoreBuilder]。
  *
- * @param fetcher Network data source that fetches [Local] values by [Key].
- * @param sourceOfTruth Local persistence layer that reads [Output] and writes [Local] by [Key].
- * @return A [StoreBuilder] ready for further configuration (e.g. validation, caching policy).
+ * @param fetcher 按 [Key] 获取 [Local] 值的网络数据源。
+ * @param sourceOfTruth 按 [Key] 读取 [Output] 并写入 [Local] 的本地持久化层。
+ * @return 可进一步配置（例如验证、缓存策略）的 [StoreBuilder]。
  */
 public inline fun <Key : Any, Local : Any, Output : Any> storeBuilder(
     fetcher: Fetcher<Key, Local>,
@@ -31,13 +31,13 @@ public inline fun <Key : Any, Local : Any, Output : Any> storeBuilder(
 ): StoreBuilder<Key, Output> = StoreBuilder.from(fetcher, sourceOfTruth)
 
 /**
- * Creates a [Fetcher] that maps an [ApiResponse] to a [FetcherResult].
+ * 创建将 [ApiResponse] 映射到 [FetcherResult] 的 [Fetcher]。
  *
  * - [ApiResponse.Success] → [FetcherResult.Data]
- * - [ApiResponse.Unauthenticated] → [FetcherResult.Error.Exception] with [AuthenticationException]
- * - Other error variants → [FetcherResult.Error.Message] with a descriptive string
+ * - [ApiResponse.Unauthenticated] → 带有 [AuthenticationException] 的 [FetcherResult.Error.Exception]
+ * - 其他错误变体 → 带有描述性字符串的 [FetcherResult.Error.Message]
  *
- * @param apiCall Suspend function that performs the network request for the given [Key].
+ * @param apiCall 为给定 [Key] 执行网络请求的挂起函数。
  */
 public inline fun <Key : Any, reified Output : Any> apiFetcher(
     crossinline apiCall: suspend (Key) -> ApiResponse<Output>,
@@ -52,13 +52,12 @@ public inline fun <Key : Any, reified Output : Any> apiFetcher(
 }
 
 /**
- * Calls [Store.get] while silently ignoring [AuthenticationException].
+ * 调用 [Store.get] 同时静默忽略 [AuthenticationException]。
  *
- * This handles the case where the user is not logged in and the endpoint requires
- * authentication. The request is skipped as a no-op rather than surfacing an error.
+ * 处理用户未登录且端点需要认证的情况。请求被跳过作为无操作，而不是显示错误。
  *
- * Note: Token expiry for authenticated users is handled upstream by the active provider's Ktor
- * Auth plugin, which refreshes the token and surfaces a session-expired error to the presentation layer.
+ * 注意：已认证用户的 token 过期由上游活动提供者的 Ktor Auth 插件处理，
+ * 它刷新 token 并向表现层发出会话过期错误。
  */
 public suspend fun <Key : Any, Output : Any> Store<Key, Output>.get(key: Key) {
     try {
@@ -68,13 +67,12 @@ public suspend fun <Key : Any, Output : Any> Store<Key, Output>.get(key: Key) {
 }
 
 /**
- * Calls [Store.fresh] (bypassing cache) while silently ignoring [AuthenticationException].
+ * 调用 [Store.fresh]（绕过缓存）同时静默忽略 [AuthenticationException]。
  *
- * This handles the case where the user is not logged in and the endpoint requires
- * authentication. The request is skipped as a no-op rather than surfacing an error.
+ * 处理用户未登录且端点需要认证的情况。请求被跳过作为无操作，而不是显示错误。
  *
- * Note: Token expiry for authenticated users is handled upstream by the active provider's Ktor
- * Auth plugin, which refreshes the token and surfaces a session-expired error to the presentation layer.
+ * 注意：已认证用户的 token 过期由上游活动提供者的 Ktor Auth 插件处理，
+ * 它刷新 token 并向表现层发出会话过期错误。
  */
 public suspend fun <Key : Any, Output : Any> Store<Key, Output>.fresh(key: Key) {
     try {
@@ -84,12 +82,12 @@ public suspend fun <Key : Any, Output : Any> Store<Key, Output>.fresh(key: Key) 
 }
 
 /**
- * Wraps this [SourceOfTruth] so that reads flow on [readDispatcher] and writes
- * (including deletes) execute on [writeDispatcher].
+ * 包装此 [SourceOfTruth]，使读取在 [readDispatcher] 上运行，
+ * 写入（包括删除）在 [writeDispatcher] 上执行。
  *
- * @param readDispatcher Dispatcher used for [SourceOfTruth.reader] emissions.
- * @param writeDispatcher Dispatcher used for [SourceOfTruth.write], [SourceOfTruth.delete],
- *   and [SourceOfTruth.deleteAll].
+ * @param readDispatcher 用于 [SourceOfTruth.reader] 发射的调度器。
+ * @param writeDispatcher 用于 [SourceOfTruth.write]、[SourceOfTruth.delete]
+ *   和 [SourceOfTruth.deleteAll] 的调度器。
  */
 public fun <Key : Any, Local : Any, Output : Any> SourceOfTruth<Key, Local, Output>.usingDispatchers(
     readDispatcher: CoroutineDispatcher,

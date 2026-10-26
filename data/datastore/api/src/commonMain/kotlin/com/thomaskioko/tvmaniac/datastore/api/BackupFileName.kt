@@ -6,7 +6,7 @@ public object BackupFileName {
     private val FORBIDDEN = charArrayOf('/', '\\', ':', '*', '?', '"', '<', '>', '|')
 
     /**
-     * @return the name a backup can be written under, or null when [name] cannot be used as one.
+     * @return 可用于写入备份的名称，当 [name] 无法用作备份名时返回 null。
      */
     public fun sanitize(name: String): String? {
         val trimmed = name.trim()

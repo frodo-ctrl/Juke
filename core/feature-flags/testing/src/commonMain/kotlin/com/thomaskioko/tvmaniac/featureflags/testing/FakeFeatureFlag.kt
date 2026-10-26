@@ -7,19 +7,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.LocalDate
 
 /**
- * In-memory [FeatureFlag] for unit tests. Holds a single mutable [value] plus an editable source.
- * Tests assign `value = true` to flip the flag and call [setSource] to simulate a debug override
- * being active. Skips the `FeatureFlagsRemoteConfig` / `DefaultFeatureFlagFactory` indirection so
- * presenter and interactor tests stay focused on the consumer's branch logic.
+ * 单元测试用的内存 [FeatureFlag]。持有单个可变 [value] 和可编辑的源。
+ * 测试通过赋值 `value = true` 来翻转 flag，并调用 [setSource] 来模拟调试覆盖处于活动状态。
+ * 跳过 `FeatureFlagsRemoteConfig` / `DefaultFeatureFlagFactory` 的间接层，
+ * 以便 presenter 和 interactor 测试专注于消费者的分支逻辑。
  *
- * For tests that exercise the debug-override decorator end-to-end, construct
- * [FakeFeatureFlagsRemoteConfig] instead and let the production binding container resolve the flag.
+ * 对于端到端测试调试覆盖装饰器的测试，应改为构造 [FakeFeatureFlagsRemoteConfig]，
+ * 并让生产绑定容器解析该 flag。
  *
- * @param initial Starting value. Read by [observe] until [value] is reassigned.
- * @param key Firebase Remote Config key. Defaulted; override when a test asserts on the rendered row.
- * @param title Human-readable name. Defaulted; override when a test asserts on the rendered row.
- * @param description One-line summary. Defaulted; override when a test asserts on the rendered row.
- * @param dateAdded Date the flag entered the codebase. Defaulted; override when a test asserts on sort order.
+ * @param initial 起始值。在重新赋值 [value] 之前由 [observe] 读取。
+ * @param key Firebase Remote Config key。已设置默认值；当测试断言渲染行时覆盖。
+ * @param title 人类可读名称。已设置默认值；当测试断言渲染行时覆盖。
+ * @param description 单行摘要。已设置默认值；当测试断言渲染行时覆盖。
+ * @param dateAdded flag 进入代码库的日期。已设置默认值；当测试断言排序顺序时覆盖。
  */
 public class FakeFeatureFlag<T>(
     initial: T,
@@ -34,7 +34,7 @@ public class FakeFeatureFlag<T>(
         MutableStateFlow(FeatureFlagSource.Firebase)
 
     /**
-     * Current value. Reassign to flip the flag; observers emit the new value.
+     * 当前值。重新赋值以翻转 flag；观察者发出新值。
      * */
     public var value: T
         get() = valueFlow.value
@@ -43,7 +43,7 @@ public class FakeFeatureFlag<T>(
         }
 
     /**
-     * Sets the source emitted by [observeSource]. Defaults to [FeatureFlagSource.Firebase].
+     * 设置 [observeSource] 发出的源。默认为 [FeatureFlagSource.Firebase]。
      * */
     public fun setSource(source: FeatureFlagSource) {
         sourceFlow.value = source

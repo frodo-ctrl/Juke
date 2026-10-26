@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 
 /**
- * Shared, provider-keyed auth-state engine: caches and persists tokens per [SyncProviderSource] through
- * [AuthStore] and orchestrates refresh. Provider repositories forward to it, so the token-state logic
- * lives in one place rather than being duplicated per provider. [refreshTokens] takes the provider's
- * [TokenRefreshAction] (null for providers whose tokens never expire).
+ * 共享的、以提供者为键的认证状态引擎：通过 [AuthStore] 为每个 [SyncProviderSource]
+ * 缓存和持久化 token，并编排刷新。提供者 repository 转发给它，因此 token 状态逻辑
+ * 集中在一处而非每个提供者重复。[refreshTokens] 接受提供者的 [TokenRefreshAction]
+ * （对于 token 永不过期的提供者为 null）。
  */
 public interface AuthStateHolder {
     public fun state(provider: SyncProviderSource): Flow<AccountAuthState>

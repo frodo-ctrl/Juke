@@ -295,7 +295,7 @@ internal fun AutoSizedCircularProgressIndicator(
 ) {
     BoxWithConstraints(modifier) {
         val diameter = with(LocalDensity.current) {
-            // We need to minus the padding added within CircularProgressIndicator
+            // 我们需要减去 CircularProgressIndicator 内部添加的内边距
             (min(constraints.maxWidth.toDp(), constraints.maxHeight.toDp()) - 4.dp)
                 .coerceAtLeast(0.dp)
         }

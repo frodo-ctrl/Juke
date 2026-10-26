@@ -137,7 +137,7 @@
     <string name="label_settings_sync_update_description">Synchronisation auto du contenu</string>
     <string name="label_settings_last_sync_date">Dernière synchronisation : %s</string>
 
-    <string name="app_name">Tv Maniac</string>
+    <string name="app_name">Juke</string>
     <string name="menu_item_discover">Découvrir</string>
     <string name="menu_item_search">Rechercher</string>
     <string name="menu_item_follow">Suivre</string>
@@ -273,9 +273,9 @@
     <string name="settings_theme_description">Choisissez entre des palettes de couleurs claires et sombres pour les
         arrière-plans, les en-têtes et le texte.
     </string>
-    <string name="settings_about_description">TvManiac est une application Kotlin Multiplatform magnifiquement conçue pour découvrir et suivre vos séries préférées. Parcourez les séries tendances, populaires et les mieux notées, gérez votre liste de suivi, suivez les épisodes regardés et synchronisez tout avec votre compte Trakt sur Android et iOS.</string>
+    <string name="settings_about_description">Juke est une application Kotlin Multiplatform magnifiquement conçue pour découvrir et suivre vos séries préférées. Parcourez les séries tendances, populaires et les mieux notées, gérez votre liste de suivi, suivez les épisodes regardés et synchronisez tout avec votre compte Trakt sur Android et iOS.</string>
     <string name="settings_about_api_disclaimer">Ce produit utilise les API TMDB et Trakt mais n\'est ni approuvé ni certifié par l\'un ou l\'autre.</string>
-    <string name="settings_about_app_name">TvManiac</string>
+    <string name="settings_about_app_name">Juke</string>
     <string name="settings_about_version">Version %s</string>
     <string name="settings_about_github">GitHub</string>
     <string name="settings_about_source_code">Code source</string>

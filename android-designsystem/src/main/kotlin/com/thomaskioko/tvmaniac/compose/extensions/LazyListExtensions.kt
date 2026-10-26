@@ -6,17 +6,17 @@ import androidx.compose.ui.unit.Dp
 import com.thomaskioko.tvmaniac.compose.theme.TvManiacSpacing
 
 /**
- * Calculates the scroll offset needed to make the next item in a lazy list partially visible.
+ * 计算使 lazy 列表中的下一项部分可见所需的滚动偏移量。
  *
- * This function is useful for creating a "peek" effect where the next or previous item is
- * slightly visible to the user, indicating that there is more content to scroll to.
+ * 此函数用于创建"窥视"效果，让下一项或上一项对用户略微可见，
+ * 表明还有更多内容可以滚动。
  *
- * @param itemWidth The width of a single item in the lazy list.
- * @param itemSpacing The spacing between items in the lazy list. Defaults to 0.dp.
- * @param visibleFraction The fraction of the next item that should be visible.
- *   A value of 0.1f means 10% of the next item will be visible. Defaults to 0.1f.
- * @return The calculated scroll offset in pixels. This value can be used with `LazyListState.scrollToItem()`
- *   to position the list correctly.
+ * @param itemWidth lazy 列表中单个项的宽度。
+ * @param itemSpacing lazy 列表中各项之间的间距。默认为 0.dp。
+ * @param visibleFraction 下一项应该可见的比例。
+ *   值为 0.1f 表示下一项的 10% 将可见。默认为 0.1f。
+ * @return 计算出的滚动偏移量（像素）。此值可与 `LazyListState.scrollToItem()`
+ *   配合使用以正确定位列表。
  */
 @Composable
 public fun calculateScrollOffset(

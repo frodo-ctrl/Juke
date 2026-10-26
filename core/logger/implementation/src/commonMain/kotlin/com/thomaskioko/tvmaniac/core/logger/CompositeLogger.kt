@@ -5,13 +5,13 @@ import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.SingleIn
 
 /**
- * A [Logger] implementation that delegates every call to all registered [Logger] instances.
+ * 将每个调用委托给所有已注册 [Logger] 实例的 [Logger] 实现。
  *
- * This allows multiple logging destinations (e.g., [KermitLogger] for local console output,
- * [FirebaseCrashLogger] for remote crash reporting) to be composed behind a single
- * [Logger] interface. Any class injecting [Logger] receives all destinations transparently.
+ * 这允许多个日志目的地（例如用于本地控制台输出的 [KermitLogger]，
+ * 用于远程崩溃报告的 [FirebaseCrashLogger]）在单个 [Logger] 接口后组合。
+ * 任何注入 [Logger] 的类都会透明地接收所有目的地。
  *
- * @param loggers The set of [Logger] implementations to delegate to.
+ * @param loggers 要委托到的 [Logger] 实现的 set。
  */
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)

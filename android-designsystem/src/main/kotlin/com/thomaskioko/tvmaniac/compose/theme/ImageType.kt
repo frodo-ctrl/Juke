@@ -5,9 +5,9 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.unit.Dp
 
 /**
- * Kind of image surface. Bundles the size-class-keyed [width] with the matching [aspect] so a call
- * site declares the kind once instead of pairing a [Layout] width with an [ImageDimens] aspect by
- * hand. Layout sizing only; image fetching/bucket selection stays with the TMDB interceptor.
+ * 图片表面的种类。将以大小类为键的 [width] 与匹配的 [aspect] 捆绑在一起，
+ * 以便调用站点声明种类一次，而不是手动将 [Layout] 宽度与 [ImageDimens] 宽高比配对。
+ * 仅用于布局尺寸；图片获取/桶选择保留给 TMDB 拦截器。
  */
 public enum class ImageType {
     Poster,
@@ -15,7 +15,7 @@ public enum class ImageType {
     Cast,
     ;
 
-    /** Aspect ratio for the kind, expressed as width / height (matching `Modifier.aspectRatio`). */
+    /** 此种类的宽高比，以 width / height 表示（匹配 `Modifier.aspectRatio`）。 */
     public val aspect: Float
         get() = when (this) {
             Poster -> ImageDimens.PosterAspect
@@ -23,7 +23,7 @@ public enum class ImageType {
             Cast -> ImageDimens.CastAspect
         }
 
-    /** Width for the kind at the current window width size class. */
+    /** 此种类在当前窗口宽度大小类下的宽度。 */
     public val width: Dp
         @Composable @ReadOnlyComposable
         get() = when (this) {

@@ -3,14 +3,14 @@ package com.thomaskioko.tvmaniac.navigation
 import kotlinx.serialization.KSerializer
 
 /**
- * Polymorphic [KSerializer] covering every [NavRoute] subclass registered through [NavRouteBinding].
+ * 覆盖每个通过 [NavRouteBinding] 注册的 [NavRoute] 子类的多态 [KSerializer]。
  *
- * Built in `navigation/implementation` from the multibound `Set<NavRouteBinding<*>>` and consumed
- * by Decompose's `childStack(serializer = ...)` so back stacks survive configuration change and
- * process death. Feature modules never implement this interface directly; they only contribute a
- * [NavRouteBinding].
+ * 在 `navigation/implementation` 中从多绑定的 `Set<NavRouteBinding<*>>` 构建，
+ * 并由 Decompose 的 `childStack(serializer = ...)` 消费，以便返回栈
+ * 在配置更改和进程死亡后仍然存活。功能模块从不直接实现此接口；
+ * 它们只贡献一个 [NavRouteBinding]。
  */
 public interface NavRouteSerializer {
-    /** Aggregated polymorphic serializer. Pass to Decompose's `childStack`. */
+    /** 聚合的多态序列化器。传递给 Decompose 的 `childStack`。 */
     public val serializer: KSerializer<NavRoute>
 }

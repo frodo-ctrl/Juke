@@ -4,15 +4,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 
 /**
- * Auth state and account-level actions for a single [SyncProviderSource]. Each backend contributes one
- * implementation into a multibound set; [AccountManager] resolves the active one.
+ * 单个 [SyncProviderSource] 的认证状态和账户级操作。每个后端贡献一个实现到多绑定的 set；
+ * [AccountManager] 解析活动的那个。
  */
 public interface AccountAuthRepository : SyncProvider {
     public val state: Flow<AccountAuthState>
     public val authState: Flow<AuthState?>
     public val authError: Flow<AuthError?>
 
-    /** Emits once per explicit sign-in completion. Cache restore and token refresh do not emit. */
+    /** 每次显式登录完成时发出一次。缓存恢复和 token 刷新不发出。 */
     public val loginEvents: SharedFlow<Unit>
 
     public fun isLoggedIn(): Boolean

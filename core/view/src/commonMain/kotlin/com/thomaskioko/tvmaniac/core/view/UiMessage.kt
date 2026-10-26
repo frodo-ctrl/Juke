@@ -53,7 +53,7 @@ public class UiMessageManager {
         mutex.withLock {
             val errorMessage = throwable.message ?: DEFAULT_ERROR_MESSAGE
 
-            // Check if we already have messages with the same error type
+            // 检查是否已有相同错误类型的消息
             val existingMessages = _messages.value.filter {
                 it.message.contains(errorMessage) || errorMessage.contains(it.message)
             }
@@ -61,11 +61,11 @@ public class UiMessageManager {
             if (existingMessages.isEmpty()) {
                 _messages.value = _messages.value + UiMessage(throwable, sourceId = sourceId)
             } else {
-                // We have similar messages, combine them
+                // 有相似的消息，合并它们
                 val firstMessage = existingMessages.first()
                 val sources = mutableSetOf<String>()
 
-                // Collect all source IDs from existing messages
+                // 从现有消息中收集所有源 ID
                 existingMessages.forEach { message ->
                     if (message.sourceId != null) {
                         sources.add(message.sourceId)
@@ -82,11 +82,11 @@ public class UiMessageManager {
                     "Errors in ${sources.joinToString(", ")}: $errorMessage"
                 }
 
-                // We need to store the combined sources in a way that can be retrieved later
-                // For now, we'll use the first source as a representative
+                // 我们需要以稍后可以检索的方式存储合并的源
+                // 目前，我们将使用第一个源作为代表
                 val representativeSource = sources.firstOrNull()
 
-                // Replace the existing message with the combined one
+                // 用合并的消息替换现有消息
                 _messages.value = _messages.value.filterNot {
                     existingMessages.contains(it)
                 } + UiMessage(combinedMessage, firstMessage.id, sourceId = representativeSource)

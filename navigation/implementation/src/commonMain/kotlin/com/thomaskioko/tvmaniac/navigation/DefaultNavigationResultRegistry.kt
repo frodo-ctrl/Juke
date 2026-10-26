@@ -9,15 +9,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
- * In-memory [NavigationResultRegistry] implementation.
+ * 内存中的 [NavigationResultRegistry] 实现。
  *
- * Each [NavigationResultRequest.Key] is backed by a capacity-1 [Channel] with [BufferOverflow.DROP_OLDEST]
- * semantics: a newer delivery replaces any unconsumed prior value for the same key, and the first
- * collector consumes the value exactly once. Only one logical collector per key is supported, which
- * matches the lifecycle of each navigation destination.
+ * 每个 [NavigationResultRequest.Key] 由一个容量为 1 且具有 [BufferOverflow.DROP_OLDEST]
+ * 语义的 [Channel] 支持：新的投递会替换同一 key 未消费的先前值，
+ * 第一个收集器恰好消费该值一次。每个 key 仅支持一个逻辑收集器，
+ * 这与每个导航目标的生命周期一致。
  *
- * The registry is activity-scoped and expected to be accessed from the main thread, which matches
- * where navigation calls originate. No explicit synchronization is applied to the key map.
+ * registry 是 activity 作用域的，预期从主线程访问，这与导航调用的来源一致。
+ * key 映射未应用显式同步。
  */
 @SingleIn(ActivityScope::class)
 @ContributesBinding(ActivityScope::class)

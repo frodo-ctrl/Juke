@@ -9,16 +9,16 @@ import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Multibinds
 
 /**
- * Declares the four navigation multibinding sets feature modules contribute into. Contributed at
- * [ActivityScope] so each feature module ships its own entries without touching a central graph.
+ * 声明功能模块贡献到的四个导航多绑定 set。在 [ActivityScope] 贡献，
+ * 以便每个功能模块提供自己的条目而无需触及集中图。
  *
- * - `Set<NavDestination<*>>`: route-to-presenter resolvers, one for each screen, overlay, or tab root.
- * - `Set<NavRouteBinding<*>>`: polymorphic serializer entries for each [NavRoute] subclass.
- * - `Set<NavRoot>`: the registered tab anchors.
- * - `Set<NavRootBinding<*>>`: polymorphic serializer entries for each [NavRoot] subclass.
+ * - `Set<NavDestination<*>>`：路由到 presenter 的解析器，每个屏幕、覆盖层或标签页根节点一个。
+ * - `Set<NavRouteBinding<*>>`：每个 [NavRoute] 子类的多态序列化器条目。
+ * - `Set<NavRoot>`：已注册的标签页锚点。
+ * - `Set<NavRootBinding<*>>`：每个 [NavRoot] 子类的多态序列化器条目。
  *
- * The first two sets are non-empty by contract; an app with zero navigation destinations would
- * not start. The two root sets allow empty so test graphs can omit roots they do not exercise.
+ * 前两个 set 按契约非空；零导航目标的应用不会启动。
+ * 两个根 set 允许为空，以便测试图可以省略它们不使用的根节点。
  */
 @ContributesTo(ActivityScope::class)
 public interface NavigationMultibindings {

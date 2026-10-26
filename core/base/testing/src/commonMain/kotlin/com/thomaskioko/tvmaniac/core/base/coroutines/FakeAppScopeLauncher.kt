@@ -6,10 +6,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
- * Test fake for [AppScopeLauncher] that runs launched blocks on a caller-supplied scope.
+ * [AppScopeLauncher] 的测试 fake，在调用方提供的作用域上运行启动的块。
  *
- * Pass the test's `TestScope` as [scope] so launched work executes under the same
- * scheduler as the test body and `runTest` can advance it to completion.
+ * 将测试的 `TestScope` 作为 [scope] 传入，以便启动的工作在与测试主体相同的
+ * 调度器下执行，`runTest` 可以将其推进到完成。
  */
 public class FakeAppScopeLauncher(
     private val scope: CoroutineScope,

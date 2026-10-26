@@ -1,8 +1,8 @@
 package com.thomaskioko.tvmaniac.settings.presenter
 
 /**
- * Localized display strings for the settings sub-pages, resolved once in the presenter so both
- * Android and iOS render from the same shared state instead of resolving strings per platform.
+ * 设置子页面的本地化显示字符串，在 presenter 中解析一次，这样 Android 和 iOS
+ * 都从同一共享状态渲染，而不是按平台解析字符串。
  */
 public data class SettingsLabels(
     val back: String = "",

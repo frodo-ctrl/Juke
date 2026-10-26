@@ -5,12 +5,11 @@ import com.arkivanov.decompose.router.children.NavState
 import com.arkivanov.decompose.router.children.SimpleChildNavState
 
 /**
- * Pairs a [NavRoot] with one entry from that tab's back stack so Decompose's `children()` API can
- * address each stack entry uniquely across the multi-stack tree.
+ * 将 [NavRoot] 与该标签页返回栈中的一个条目配对，以便 Decompose 的 `children()` API 能够
+ * 在多栈树中唯一地寻址每个栈条目。
  *
- * Decompose requires every [ChildNavState.configuration] in the same tree to be unique. Two tabs
- * may share the same [NavRoot] at the bottom of their stacks, so [tabRoot] is paired with [route]
- * to disambiguate the entry.
+ * Decompose 要求同一棵树中的每个 [ChildNavState.configuration] 都是唯一的。
+ * 两个标签页可能在它们的栈底共享相同的 [NavRoot]，因此将 [tabRoot] 与 [route] 配对以消除条目的歧义。
  */
 internal data class TabbedRoute(
     val tabRoot: NavRoot,
@@ -18,15 +17,14 @@ internal data class TabbedRoute(
 )
 
 /**
- * Snapshot of the multi-stack navigation tree owned by [DefaultNavigator].
+ * [DefaultNavigator] 拥有的多栈导航树的快照。
  *
- * Each registered [NavRoot] maps to a non-empty list of [BaseRoute] entries: the first element is
- * the tab's root entry and the tail is the pushed [NavRoute] sequence. [activeRoot] points at the
- * tab whose top entry is currently visible. [multiStackNavTransformer] produces new instances of
- * this class in response to a [MultiStackNavEvent].
+ * 每个已注册的 [NavRoot] 映射到一个非空的 [BaseRoute] 条目列表：第一个元素是标签页的根条目，
+ * 尾部是推送的 [NavRoute] 序列。[activeRoot] 指向当前顶部条目可见的标签页。
+ * [multiStackNavTransformer] 响应 [MultiStackNavEvent] 生成此类的新实例。
  *
- * The class is the [NavState] passed to Decompose's `children()`. [children] projects every entry
- * across every tab as a [ChildNavState] with the appropriate lifecycle status.
+ * 此类是传递给 Decompose 的 `children()` 的 [NavState]。
+ * [children] 将每个标签页中的每个条目投影为具有相应生命周期状态的 [ChildNavState]。
  */
 internal data class MultiStackNavState(
     val activeRoot: NavRoot,
@@ -42,17 +40,17 @@ internal data class MultiStackNavState(
     }
 
     /**
-     * Projects every entry across every tab as a [ChildNavState]. Only the active tab's top is
-     * [ChildNavState.Status.RESUMED]; everything else is [ChildNavState.Status.CREATED].
+     * 将每个标签页中的每个条目投影为 [ChildNavState]。只有活动标签页的顶部是
+     * [ChildNavState.Status.RESUMED]；其他一切都是 [ChildNavState.Status.CREATED]。
      *
-     * Decompose's canonical neighbours are typically [ChildNavState.Status.STARTED] (ChildPages
-     * `INACTIVE`) or [ChildNavState.Status.CREATED] (ChildStack back stack). [CREATED] is chosen
-     * here so coroutines wired through `lifecycle.coroutineScope()` do not run for inactive tabs,
-     * conserving CPU and battery on bottom-nav re-entry.
+     * Decompose 的规范邻居通常是 [ChildNavState.Status.STARTED]（ChildPages `INACTIVE`）
+     * 或 [ChildNavState.Status.CREATED]（ChildStack 返回栈）。此处选择 [CREATED] 是为了
+     * 通过 `lifecycle.coroutineScope()` 连接的协程不会为非活动标签页运行，
+     * 在底部导航重新进入时节省 CPU 和电量。
      *
-     * Tab presenters must use `stateIn(scope, SharingStarted.WhileSubscribed(...))` for any flow
-     * that needs to refresh on tab re-entry; the flow restarts on UI subscription, independent of
-     * lifecycle status.
+     * 标签页 Presenter 必须为需要在标签页重新进入时刷新的任何 flow 使用
+     * `stateIn(scope, SharingStarted.WhileSubscribed(...))`；该 flow 在 UI 订阅时重新启动，
+     * 与生命周期状态无关。
      */
     override val children: List<ChildNavState<TabbedRoute>> by lazy {
         tabStacks.flatMap { (root, stack) ->
@@ -70,8 +68,8 @@ internal data class MultiStackNavState(
 }
 
 /**
- * Builds the initial [MultiStackNavState] with one root entry for each registered tab and
- * [initialRoot] active. Used once when the activity has no saved state to restore.
+ * 构建初始 [MultiStackNavState]，每个已注册标签页一个根条目，[initialRoot] 活动。
+ * 当活动没有保存状态需要恢复时使用一次。
  */
 internal fun multiStackInitialState(navRoots: Set<NavRoot>, initialRoot: NavRoot): MultiStackNavState =
     MultiStackNavState(
@@ -80,11 +78,11 @@ internal fun multiStackInitialState(navRoots: Set<NavRoot>, initialRoot: NavRoot
     )
 
 /**
- * Applies [event] to [state] and returns the next [MultiStackNavState].
+ * 将 [event] 应用于 [state] 并返回下一个 [MultiStackNavState]。
  *
- * Push, pop, and dedupe events target the active tab's stack only. [MultiStackNavEvent.SwitchTab]
- * and [MultiStackNavEvent.ReplaceAll] change which tab is active and may reset stacks. Unregistered
- * roots throw at this level so the navigator surfaces misconfigurations close to the call site.
+ * Push、pop 和 dedupe 事件仅针对活动标签页的栈。
+ * [MultiStackNavEvent.SwitchTab] 和 [MultiStackNavEvent.ReplaceAll] 更改哪个标签页活动并可能重置栈。
+ * 未注册的根节点在此层抛出，以便导航器在接近调用站点的地方暴露配置错误。
  */
 internal fun multiStackNavTransformer(
     state: MultiStackNavState,

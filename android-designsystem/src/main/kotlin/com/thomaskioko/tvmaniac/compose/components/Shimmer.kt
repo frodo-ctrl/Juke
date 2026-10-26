@@ -22,9 +22,9 @@ import androidx.compose.ui.platform.LocalInspectionMode
 private const val SHIMMER_DURATION_MILLIS = 1200
 
 /**
- * Draws a sweeping highlight over a translucent base, signalling content is loading. Falls back to
- * a static base when motion is reduced or in inspection mode, so previews and screenshot tests stay
- * deterministic. Apply [clip] before this to confine the sweep to a shape.
+ * 在半透明基底上绘制扫过高光，表示内容正在加载。
+ * 当动画减少或在检查模式下时，回退到静态基底，以便预览和截图测试保持确定性。
+ * 在此之前应用 [clip] 将扫描限制在某个形状内。
  */
 @Composable
 public fun Modifier.shimmer(): Modifier {
@@ -62,7 +62,7 @@ public fun Modifier.shimmer(): Modifier {
         }
 }
 
-/** Box pre-clipped to [shape] that renders a [shimmer]. Sized by the caller via [modifier]. */
+/** 预裁剪到 [shape] 的 Box，渲染 [shimmer]。由调用方通过 [modifier] 设置大小。 */
 @Composable
 public fun ShimmerBox(
     modifier: Modifier = Modifier,

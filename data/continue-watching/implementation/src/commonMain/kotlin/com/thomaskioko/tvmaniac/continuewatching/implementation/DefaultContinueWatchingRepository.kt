@@ -26,8 +26,8 @@ public class DefaultContinueWatchingRepository(
                 progressStore.fetchWith(forceRefresh)
             }
         } catch (_: FetcherSkipSignal) {
-            // Intentional: a fetcher signaled "leave the local table alone".
-            // Upstream HTTP failure or Nitro's empty-response guard.
+            // 有意为之：抓取器发出"不要改动本地表"的信号。
+            // 上游 HTTP 失败或 Nitro 的空响应保护。
         }
     }
 

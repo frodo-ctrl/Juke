@@ -3,15 +3,15 @@ package com.thomaskioko.tvmaniac.navigation
 import com.arkivanov.decompose.router.stack.ChildStack
 
 /**
- * Snapshot returned from [Navigator.buildHostNavigation] containing the active tab and a
- * [ChildStack] for each registered [NavRoot].
+ * 从 [Navigator.buildHostNavigation] 返回的快照，包含活动标签页和
+ * 每个已注册 [NavRoot] 的 [ChildStack]。
  *
- * Render-side presenters read [tabStacks] for the back stack of each tab and observe [activeRoot]
- * to decide which tab pane is visible.
+ * 渲染侧 presenter 读取 [tabStacks] 获取每个标签页的返回栈，
+ * 并观察 [activeRoot] 以决定哪个标签页窗格可见。
  *
- * @param T component type produced by the host's `childFactory`.
- * @property activeRoot tab whose top entry is currently visible.
- * @property tabStacks back stack for each registered tab, keyed by [NavRoot].
+ * @param T 宿主的 `childFactory` 生成的组件类型。
+ * @property activeRoot 顶部条目当前可见的标签页。
+ * @property tabStacks 每个已注册标签页的返回栈，以 [NavRoot] 为键。
  */
 public data class MultiStackHostState<out T : Any>(
     public val activeRoot: NavRoot,

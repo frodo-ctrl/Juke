@@ -16,7 +16,7 @@ public interface EpisodeRepository {
 
     public fun observeEpisodeById(episodeId: Long): Flow<EpisodeById?>
 
-    /** Observes the most-recently watched episodes across all shows, newest first. */
+    /** 观察所有节目中最近观看的剧集，最新在前。 */
     public fun observeRecentlyWatched(limit: Long): Flow<List<RecentlyWatchedEpisode>>
 
     public fun observeWatchedEpisodeRuntimes(): Flow<List<WatchedEpisodeRuntime>>
@@ -43,8 +43,8 @@ public interface EpisodeRepository {
     )
 
     /**
-     * Mark an episode as watched along with all previous unwatched episodes.
-     * Automatically adds the show to the library if not already there.
+     * 将剧集连同所有之前未观看的剧集一起标记为已观看。
+     * 如果节目尚未在库中，自动将其添加到库。
      */
     public suspend fun markEpisodeAndPreviousEpisodesWatched(
         showId: Long,
@@ -56,29 +56,29 @@ public interface EpisodeRepository {
     )
 
     /**
-     * Mark an episode as unwatched. The SQL view automatically updates next episode calculations.
+     * 将剧集标记为未观看。SQL 视图会自动更新下一集计算。
      */
     public suspend fun markEpisodeAsUnwatched(showId: Long, episodeId: Long)
 
     /**
-     * Observe watch progress for a specific season.
+     * 观察特定季的观看进度。
      */
     public fun observeSeasonWatchProgress(showId: Long, seasonNumber: Long): Flow<SeasonWatchProgress>
 
     /**
-     * Observe watch progress for an entire show (across all seasons).
+     * 观察整个节目的观看进度（跨所有季）。
      */
     public fun observeShowWatchProgress(showId: Long): Flow<ShowWatchProgress>
 
     /**
-     * Observe watch progress for all seasons of a show.
-     * Returns a list of SeasonWatchProgress, one per season.
+     * 观察节目所有季的观看进度。
+     * 返回 SeasonWatchProgress 列表，每季一个。
      */
     public fun observeAllSeasonsWatchProgress(showId: Long): Flow<List<SeasonWatchProgress>>
 
     /**
-     * Mark all episodes in a season as watched.
-     * Automatically adds the show to the library if not already there.
+     * 将一季中的所有剧集标记为已观看。
+     * 如果节目尚未在库中，自动将其添加到库。
      */
     public suspend fun markSeasonWatched(
         showId: Long,
@@ -88,8 +88,8 @@ public interface EpisodeRepository {
     )
 
     /**
-     * Mark all episodes in a season as watched along with all previous seasons.
-     * Automatically adds the show to the library if not already there.
+     * 将一季中的所有剧集连同所有之前的季一起标记为已观看。
+     * 如果节目尚未在库中，自动将其添加到库。
      */
     public suspend fun markSeasonAndPreviousSeasonsWatched(
         showId: Long,
@@ -105,13 +105,13 @@ public interface EpisodeRepository {
     )
 
     /**
-     * Mark all episodes in a season as unwatched.
+     * 将一季中的所有剧集标记为未观看。
      */
     public suspend fun markSeasonUnwatched(showId: Long, seasonNumber: Long)
 
     /**
-     * Observe count of unwatched episodes in seasons before the specified season number.
-     * Used for reactive UI to determine if previous seasons dialog should be shown.
+     * 观察指定季编号之前各季中未观看剧集的数量。
+     * 供响应式 UI 用于确定是否应显示"之前各季"对话框。
      */
     public fun observeUnwatchedCountInPreviousSeasons(
         showId: Long,
@@ -119,11 +119,11 @@ public interface EpisodeRepository {
     ): Flow<Long>
 
     /**
-     * Get upcoming episodes from followed shows within the specified time window.
-     * Only returns episodes that have first_aired set and are not yet watched.
-     * Time filtering (from current time to now + limit) is handled internally.
-     * @param limit Duration from now to search for upcoming episodes
-     * @return List of upcoming episodes ordered by air time
+     * 在指定时间窗口内从已关注的节目中获取即将到来的剧集。
+     * 仅返回设置了 first_aired 且尚未观看的剧集。
+     * 时间过滤（从当前时间到现在 + limit）在内部处理。
+     * @param limit 从现在开始搜索即将到来剧集的时长
+     * @return 按播出时间排序的即将到来剧集列表
      */
     public suspend fun getUpcomingEpisodesFromFollowedShows(limit: Duration): List<UpcomingEpisode>
 

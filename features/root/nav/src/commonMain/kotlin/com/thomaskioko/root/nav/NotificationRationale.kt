@@ -2,9 +2,8 @@ package com.thomaskioko.root.nav
 
 public interface NotificationRationale {
     /**
-     * Shows the notification permission rationale on the next idle tick if the user has not yet
-     * been asked and no rationale is currently showing. Safe to call repeatedly; a no-op when the
-     * preconditions are not met.
+     * 如果尚未询问用户且当前没有显示任何理由，则在下一个空闲刻度上显示通知权限理由。
+     * 可以安全地重复调用；当不满足前置条件时为无操作。
      */
     public suspend fun showIfNeeded()
 }

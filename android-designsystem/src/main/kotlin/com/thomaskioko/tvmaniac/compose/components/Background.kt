@@ -17,11 +17,10 @@ import androidx.compose.ui.unit.dp
 import com.thomaskioko.tvmaniac.compose.theme.LocalBackgroundTheme
 
 /**
- * The main background for the app. Uses [LocalBackgroundTheme] to set the color and tonal elevation
- * of a [Surface].
+ * 应用的主背景。使用 [LocalBackgroundTheme] 设置 [Surface] 的颜色和色调高度。
  *
- * @param modifier Modifier to be applied to the background.
- * @param content The background content.
+ * @param modifier 应用于背景的 Modifier。
+ * @param content 背景内容。
  */
 @Composable
 public fun TvManiacBackground(

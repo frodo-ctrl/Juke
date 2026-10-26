@@ -4,10 +4,10 @@ import com.thomaskioko.tvmaniac.navigation.NavRoot
 import kotlinx.serialization.Serializable
 
 /**
- * Tab root for the Progress bottom-tab destination.
+ * Progress 底部标签页目的地的标签根。
  *
- * Anchors the Progress tab's back stack. Contributed to `Set<NavRoot>` via
- * [com.thomaskioko.tvmaniac.progress.nav.di.ProgressRootBinding].
+ * 锚定 Progress 标签页的返回栈。通过 [com.thomaskioko.tvmaniac.progress.nav.di.ProgressRootBinding]
+ * 贡献到 `Set<NavRoot>`。
  */
 @Serializable
 public data object ProgressRoot : NavRoot

@@ -5,23 +5,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.LocalDate
 
 /**
- * Base class for flags backed by Firebase Remote Config. [observe] delegates to
- * [FeatureFlagsRemoteConfig.observeBoolean] and [observeSource] delegates to
- * [FeatureFlagsRemoteConfig.observeSource]. Local debug-build overrides are layered on by the
- * `DebugRemoteConfig` decorator in the implementation module; this class itself stays free of
- * `DebugConfig` and `FeatureFlagLocalStore` dependencies.
+ * 由 Firebase Remote Config 支持的 flag 的基类。[observe] 委托给
+ * [FeatureFlagsRemoteConfig.observeBoolean]，[observeSource] 委托给
+ * [FeatureFlagsRemoteConfig.observeSource]。本地 debug 构建覆盖由实现模块中的
+ * `DebugRemoteConfig` 装饰器分层；此类本身不依赖 `DebugConfig` 和 `FeatureFlagLocalStore`。
  *
- * Instances are produced by [FeatureFlagFactory.boolean], invoked from `@Provides` functions in
- * the implementation module's `FlagBindings` interface. Authors should not subclass [RemoteFlag]
- * directly in feature code; declare a qualifier annotation under `flags/` and add a binding pair
- * to `FlagBindings` instead.
+ * 实例由 [FeatureFlagFactory.boolean] 生成，从实现模块 `FlagBindings` 接口中的
+ * `@Provides` 函数调用。作者不应在功能代码中直接子类化 [RemoteFlag]；
+ * 在 `flags/` 下声明限定注解并将绑定对添加到 `FlagBindings` 即可。
  *
- * @param key Firebase Remote Config key.
- * @param title Human-readable name shown on the debug screen row.
- * @param description One-line summary shown beneath the title on the debug screen.
- * @param dateAdded Date the flag entered the codebase.
- * @param defaultValue Fallback returned until Firebase serves an explicit value.
- * @param remote Shared Firebase Remote Config provider injected via Metro.
+ * @param key Firebase Remote Config key。
+ * @param title 调试屏幕行上显示的人类可读名称。
+ * @param description 标题下方显示的单行摘要。
+ * @param dateAdded flag 进入代码库的日期。
+ * @param defaultValue 在 Firebase 返回显式值之前回退的默认值。
+ * @param remote 通过 Metro 注入的共享 Firebase Remote Config 提供者。
  */
 public abstract class RemoteFlag(
     override val key: String,
